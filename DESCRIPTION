@@ -1,0 +1,21 @@
+Encoding: UTF-8
+Package: smoothOR
+Type: Package
+Version: 0.1.1
+Date: 2023-08-01
+Title: A Brief Description of Your Package
+Author: Joana Silva <joana.silva@example.com> [aut, cre],
+        André Santos <andre.santos@example.com> [aut]
+Maintainer: Joana Silva <joana.silva@example.com>
+Description: Uma breve descrição do que o pacote faz.
+Depends: R (>= 2.12.0), survival, splines
+License: GPL-3
+URL: https://github.com/joana/smoothOR
+BugReports: https://github.com/joana/smoothOR/issues
+LazyLoad: yes
+LazyData: yes
+NeedsCompilation: no
+Imports:
+    gam,
+    mgcv
+
