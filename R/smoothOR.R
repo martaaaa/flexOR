@@ -1,6 +1,6 @@
 #' Smooth OR
 #'
-#' @notes fits a Generalized Additive Model (GAM) and creating a resulting object
+#' fits a Generalized Additive Model (GAM) and creating a resulting object
 #' containing the model outcomes, related to odds ratio analysis.
 #' Here's a step-by-step description of what the function does:
 #'
@@ -9,9 +9,11 @@
 #' @param formula The formula describing the model. Required when fitting a new model (modelfit = "FALSE").
 #' @param gamfit A pre-fitted GAM object. When provided, modelfit is set to "TRUE" and the function processes this object.
 #'
-#' @examples
-#' mod1 <- smoothOR(data=data1, response=variable, formula=~covariate1+covariate2)
 #' @export
+#' @importFrom stats terms as.formula binomial na.omit
+#' @import splines
+#' @import survival
+#'
 #' @return An object of class "OR" containing the processed data and analysis results.
 #'
 #' The returned object includes relevant information from the fitted Generalized Additive Model (GAM) or

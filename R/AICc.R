@@ -5,13 +5,19 @@
 #' provides a correction for small sample sizes, which can lead to overfitting
 #' in model selection. AICc = AIC + 2*p(p+1)/(n-p-1)
 #'
+#' @importFrom stats logLik AIC
 #' @param object This object has to be of class 'GAM' or 'gam'.
 #'
 #' @return Returns the AICc coefficient.
 #'
 #' @examples
-#' AICc(fit1)
-#' fit1 is a gam object
+#' library(mgcv)
+#' set.seed(123)
+#' n <- 100
+#' x <- rnorm(n)
+#' y <- sin(x) + rnorm(n, sd = 0.2)
+#' gam_fit <- gam(y ~ s(x))
+#' AICc(gam_fit)
 #'
 #' @keywords internal
 #' @export

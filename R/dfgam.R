@@ -4,6 +4,9 @@
 #' in a Generalized Additive Model (GAM) using different information criteria, such as AIC, AICc, and BIC.
 #' It helps prevent overfitting by choosing the appropriate degrees of freedom for smoother terms.
 #'
+#' @importFrom stats as.formula
+#' @importFrom stats binomial AIC BIC
+#'
 #' @param response The name of the response variable in the dataset.
 #' @param nl.predictors A character vector containing the names of the predictors for which optimal degrees of freedom need to be determined.
 #' @param other.predictors A character vector containing the names of other predictors to be included in the model (optional).
@@ -14,12 +17,6 @@
 #'
 #' @return A list containing the fitted model, a matrix of selected degrees of freedom, the chosen information criterion method,
 #' the names of predictors for which degrees of freedom were determined, and other predictors included in the model (if any).
-#'
-#' @examples
-#' response <- "target_variable"
-#' predictors <- c("predictor1", "predictor2", "predictor3")
-#' other_predictors <- c("other_predictor1", "other_predictor2")
-#' result <- dfgam(response, nl.predictors = predictors, other.predictors = other_predictors)
 #'
 #' @keywords internal
 #' @export
@@ -33,8 +30,8 @@ dfgam <- function(response, nl.predictors, other.predictors=NULL, smoother="s", 
 	if (smoother != "s") {stop("argument 'smoother' must be 's'");}
 	if ( missing(method) ) {method <- "AIC";}
 	if ( method != "AIC" & method != "AICc" & method != "BIC") {stop("The argument 'method' is not valid");}  # include other methods from mgcv?
-  if (missing(step)) step <- 3
-  if (step < 1 | step > 10) stop("'step' must be between 1 and 10")
+  #if (missing(step)) step <- 3
+  #if (step < 1 | step > 10) stop("'step' must be between 1 and 10")
 	p0 <- match(names(data), response, nomatch=0);
 	p1 <- which(p0 == 1);
 	ny <- data[,p1];
