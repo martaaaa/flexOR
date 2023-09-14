@@ -1,30 +1,66 @@
-#' Smooth OR
+#' flexOR: Flexible Odds Ratio Computation for GAM Models
 #'
-#' fits a Generalized Additive Model (GAM) and creating a resulting object
-#' containing the model outcomes, related to odds ratio analysis.
-#' Here's a step-by-step description of what the function does:
+#' Calculate odds ratios (ORs) and associated confidence intervals (CIs) for specified
+#' predictors in generalized additive models (GAMs).
 #'
-#' @param data A data frame containing the dataset for analysis.
-#' @param response The response variable in the data frame. Required when fitting a new model (modelfit = "FALSE")
-#' @param formula The formula describing the model. Required when fitting a new model (modelfit = "FALSE").
-#' @param gamfit A pre-fitted GAM object. When provided, modelfit is set to "TRUE" and the function processes this object.
+#' @aliases flexOR
 #'
-#' @export
-#' @importFrom stats terms as.formula binomial na.omit
-#' @import splines
-#' @import survival
+#' @description
+#' The `flexOR` function computes odds ratios and CIs for predictors in GAM models.
+#' It provides flexibility in specifying predictors using either a data frame, a response
+#' variable and a formula, or a pre-fitted GAM model. The function is useful for
+#' understanding the impact of predictors on binary outcomes in GAMs.
 #'
-#' @return An object of class "OR" containing the processed data and analysis results.
+#' @usage
+#' flexOR(data, response = NULL, formula = NULL, gamfit)
 #'
-#' The returned object includes relevant information from the fitted Generalized Additive Model (GAM) or
-#' analysis of the provided GAM object. It provides insights into odds ratios and their analysis.
-#' Users can further explore and interpret the results using appropriate methods for class "OR".
+#' @param data A data frame containing the variables.
+#' @param response The response variable as a character string.
+#' @param formula A formula specifying the model if not using a pre-fitted GAM.
+#' @param gamfit A pre-fitted GAM model (class 'Gam').
 #'
-#' @seealso \code{\link{gam}}, \code{\link{summary}}, \code{\link{plot}}
-#' @keywords internal
+#' @details
+#' The `flexOR` function calculates odds ratios and CIs for specified predictors in
+#' a GAM model. It accepts three different ways of specifying the model: by providing
+#' the data frame and response variable, by specifying the formula, or by providing
+#' a pre-fitted GAM model.
+#'
+#' @return
+#' A list containing the following components:
+#' \itemize{
+#'   \item \code{dataset}: The dataset used for the analysis.
+#'   \item \code{gamfit}: The fitted GAM model.
+#' }
+#'
+#' @references
+#' Include relevant references here.
+#'
+#' @examples
+#' \dontrun{
+#' # Load necessary libraries
+#' library(mgcv)
+#'
+#' # Simulate data
+#' set.seed(123)
+#' data1 <- data.frame(
+#'   x = rnorm(100),
+#'   y = rbinom(100, 1, 0.5)
+#' )
+#'
+#' # Fit a GAM model
+#' fit <- gam(y ~ s(x), data = data1, family = binomial)
+#'
+#' # Calculate odds ratios using flexOR
+#' result <- flexOR(data = data1, response = "y", gamfit = fit)
+#'
+#' # Print the odds ratios and CIs
+#' print(result)
+#' }
+#'
+#' @keywords GAM odds-ratio binary-data confidence-interval
 
 
-smoothOR <- function(data, response=NULL, formula=NULL, gamfit) {
+flexOR <- function(data, response=NULL, formula=NULL, gamfit) {
 	modelfit <- "TRUE";
 	mydata2 <- deparse( substitute(data) );
 	if ( missing(gamfit) ) {modelfit <- "FALSE";}

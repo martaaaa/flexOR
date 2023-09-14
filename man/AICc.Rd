@@ -2,30 +2,51 @@
 % Please edit documentation in R/AICc.R
 \name{AICc}
 \alias{AICc}
-\title{Akaike's Information Criterion corrected}
+\title{AICc Calculation for GAM Models}
 \usage{
 AICc(object)
 }
 \arguments{
-\item{object}{This object has to be of class 'GAM' or 'gam'.}
+\item{object}{An object of class "Gam" or "gam" representing a fitted GAM model.}
 }
 \value{
-Returns the AICc coefficient.
+A numeric value representing the AICc for the GAM model.
 }
 \description{
-This function calculates the corrected Akaike Information Criterion (AICc)
-for a given statistical model. AICc is a modification of the AIC that
-provides a correction for small sample sizes, which can lead to overfitting
-in model selection. AICc = AIC + 2*p(p+1)/(n-p-1)
+Calculate AICc (Akaike Information Criterion corrected for small sample sizes)
+for Generalized Additive Models (GAM).
+}
+\details{
+This function calculates the AICc value (Akaike Information Criterion corrected
+for small sample sizes) for a given GAM model. AICc is a measure of model fit
+that penalizes the number of parameters in the model to avoid overfitting.
 }
 \examples{
+\dontrun{
+# Load necessary libraries
 library(mgcv)
-set.seed(123)
-n <- 100
-x <- rnorm(n)
-y <- sin(x) + rnorm(n, sd = 0.2)
-gam_fit <- gam(y ~ s(x))
-AICc(gam_fit)
 
+# Simulate data
+set.seed(123)
+data1 <- data.frame(
+  x = rnorm(100),
+  y = rnorm(100)
+)
+
+# Fit a GAM model
+mod <- gam(y ~ s(x), data = data1)
+
+# Calculate AICc
+AICc_value <- AICc(mod)
 }
-\keyword{internal}
+}
+\references{
+Burnham, K. P., & Anderson, D. R. (2002). Model Selection and Multimodel
+Inference: A Practical Information-Theoretic Approach. Springer.
+}
+\seealso{
+\code{\link{gam}}, \code{\link{logLik}}, \code{\link{AIC}}
+}
+\keyword{AICc}
+\keyword{GAM}
+\keyword{model-selection}

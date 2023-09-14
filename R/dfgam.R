@@ -1,26 +1,59 @@
-#' Selection of the optimal degrees of freedom
+#' dfgam: Degrees of Freedom Selection for GAM Models
 #'
-#' This function performs the selection of optimal degrees of freedom for smoothing terms
-#' in a Generalized Additive Model (GAM) using different information criteria, such as AIC, AICc, and BIC.
-#' It helps prevent overfitting by choosing the appropriate degrees of freedom for smoother terms.
+#' Calculate the degrees of freedom for generalized additive models (GAMs) using
+#' a selection method based on AIC, AICc, or BIC criteria.
 #'
-#' @importFrom stats as.formula
-#' @importFrom stats binomial AIC BIC
+#' @aliases dfgam
 #'
-#' @param response The name of the response variable in the dataset.
-#' @param nl.predictors A character vector containing the names of the predictors for which optimal degrees of freedom need to be determined.
-#' @param other.predictors A character vector containing the names of other predictors to be included in the model (optional).
-#' @param smoother The type of smoother to be used. Currently, only "s" (thin plate regression spline) is supported.
-#' @param method The information criterion to be used for selection. Possible values: "AIC", "AICc", or "BIC".
-#' @param data The dataset containing the variables.
-#' @param step The number of steps to search for optimal degrees of freedom (optional, default is 3).
+#' @description
+#' The `dfgam` function calculates the degrees of freedom for specified non-linear
+#' predictors in a GAM model. The user can choose between AIC (Akaike Information
+#' Criterion), AICc (AIC corrected for small sample sizes), or BIC (Bayesian
+#' Information Criterion) as the selection criteria. This function is useful for
+#' determining the appropriate degrees of freedom for smoothing terms in GAMs.
 #'
-#' @return A list containing the fitted model, a matrix of selected degrees of freedom, the chosen information criterion method,
-#' the names of predictors for which degrees of freedom were determined, and other predictors included in the model (if any).
+#' @param response The response variable as a formula.
+#' @param nl.predictors A character vector specifying the non-linear predictors.
+#' @param other.predictors A character vector specifying other predictors if needed.
+#' @param smoother The type of smoothing term, currently only "s" is supported.
+#' @param method The selection method, one of "AIC", "AICc", or "BIC".
+#' @param data The data frame containing the variables.
+#' @param step The step size for grid search when there are multiple non-linear predictors.
 #'
-#' @keywords internal
-#' @export
+#' @details
+#' The `dfgam` function calculates the degrees of freedom for specified non-linear
+#' predictors in a GAM model. It fits multiple GAMs with different degrees of freedom
+#' and selects the best model based on the chosen selection method (AIC, AICc, or BIC).
 #'
+#' @return
+#' A list containing the following components:
+#' \itemize{
+#'   \item \code{fit}: The fitted GAM model.
+#'   \item \code{df}: A numeric vector of degrees of freedom for each non-linear predictor.
+#'   \item \code{method}: The selection method used (AIC, AICc, or BIC).
+#'   \item \code{nl.predictors}: The non-linear predictors used in the model.
+#'   \item \code{other.predictors}: Other predictors used in the model if specified.
+#' }
+#'
+#' @examples
+#' \dontrun{
+#' # Load necessary libraries
+#' library(mgcv)
+#'
+#' # Simulate data
+#' set.seed(123)
+#' data1 <- data.frame(
+#'   x = rnorm(100),
+#'   y = rnorm(100)
+#' )
+#'
+#' # Calculate degrees of freedom using AIC
+#' result <- dfgam(response = y ~ x, nl.predictors = "x", data = data1)
+#' }
+#'
+#' @keywords GAM degrees-of-freedom model-selection smoothing AIC AICc BIC
+
+
 dfgam <- function(response, nl.predictors, other.predictors=NULL, smoother="s", method = "AIC", data, step=NULL) {
 	#options(warn=-1);
 	if ( missing(data) ) {stop("The argument data is missing");}
