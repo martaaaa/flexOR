@@ -218,10 +218,10 @@ plot.OR <- function(
   if ( xref < min(xlim) | xref > max(xlim) ) {
     stop("The reference value is out of range of 'xlim'");
   }
-#  matplot(
-#    x=a[jj,k], y=tmat[jj,], type="l", lty=c(1, 5, 5, 2), col=c(1, 2, 2, 1),
-#    xlab=xlab, ylab=ylab, xlim=xlim, ylim=ylim, log=log, xaxt="n", main=main, ...
-#  );
+  #  matplot(
+  #    x=a[jj,k], y=tmat[jj,], type="l", lty=c(1, 5, 5, 2), col=c(1, 2, 2, 1),
+  #    xlab=xlab, ylab=ylab, xlim=xlim, ylim=ylim, log=log, xaxt="n", main=main, ...
+  #  );
   matplot(
     x=a[jj,k], y=tmat[jj,], type="l", lty=c(1, 5, 5, 5, 5, 5), col=c(1, 1, 1, 1, 1, 1),
     xlab=xlab, ylab=ylab, xlim=xlim, ylim=ylim, log=log, xaxt="n", main=main, ...
