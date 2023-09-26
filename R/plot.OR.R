@@ -51,13 +51,12 @@
 #'
 #' @keywords smooth odds ratios plot
 #' @export
-#' @importFrom graphics matplot axis polygon abline arrows text
+#' @importFrom graphics matplot axis polygon abline arrows text plot
 #' @importFrom stats update predict vcov quantile qnorm
 #'
 #' @importFrom gam gam
 #' @importFrom mgcv gam
 #' 
-
 
 plot.OR <- function(
     x, predictor, prob=NULL, pred.value=NULL, conf.level=0.95, round.x=NULL,
@@ -88,7 +87,7 @@ plot.OR <- function(
   if (length(conf.level) > 1) conf.level <- sort(conf.level)
   if (min(conf.level) <= 0.5) {stop("'conf.level' must be greater than 0.5");}
   if (max(conf.level) >= 1) {stop("'conf.level' must be less than 1");}
-
+  
   ctype <- "FALSE";
   qvalue <- (1+conf.level[1])/2;
   if (length(conf.level) > 1) qvalue2 <- (1+conf.level[2])/2;
@@ -196,11 +195,11 @@ plot.OR <- function(
     if (ylog) {main <- paste("Smooth log odds ratio for", names(a)[k]);}
     else {main <- paste("Smooth odds ratio for", names(a)[k]);}
   }
-
+  
   tmat <- cbind(eta.ref, eta.ref-qnorm(qvalue)*se.eta.ref1, eta.ref+qnorm(qvalue)*se.eta.ref1);
   if (length(conf.level) > 1) {tmat <- cbind(tmat, eta.ref-qnorm(qvalue2)*se.eta.ref1, eta.ref+qnorm(qvalue2)*se.eta.ref1);}
   if (!ylog) {tmat <- exp(tmat);}
-
+  
   line <- rep(0, n);
   jj <- match(sort(unique(a[,k])), a[,k]);
   if ( missing(xlim) ) {xlim <- c( min(a[,k]), max(a[,k]) );}
@@ -336,4 +335,4 @@ plot.OR <- function(
       text(xref, y[1], paste( n.predictor, "=", round(xref, round.x) ), adj=c(1, -0.7), ...);
     }
   }
-}
+} # plot.OR
