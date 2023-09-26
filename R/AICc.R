@@ -13,10 +13,6 @@
 #' @return
 #' A numeric value representing the AICc for the GAM model.
 #'
-#' @references
-#' Burnham, K. P., & Anderson, D. R. (2002). Model Selection and Multimodel
-#' Inference: A Practical Information-Theoretic Approach. Springer.
-#'
 #' @examples
 #' \dontrun{
 #' # Load necessary libraries

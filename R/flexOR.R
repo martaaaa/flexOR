@@ -58,6 +58,7 @@
 #' }
 #'
 #' @keywords GAM odds-ratio binary-data confidence-interval
+#' @export
 
 
 flexOR <- function(data, response=NULL, formula=NULL, gamfit) {

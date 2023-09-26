@@ -40,10 +40,6 @@ mod <- gam(y ~ s(x), data = data1)
 AICc_value <- AICc(mod)
 }
 }
-\references{
-Burnham, K. P., & Anderson, D. R. (2002). Model Selection and Multimodel
-Inference: A Practical Information-Theoretic Approach. Springer.
-}
 \seealso{
 \code{\link{gam}}, \code{\link{logLik}}, \code{\link{AIC}}
 }
