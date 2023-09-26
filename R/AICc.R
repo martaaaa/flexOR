@@ -35,6 +35,7 @@
 #' \code{\link{gam}}, \code{\link{logLik}}, \code{\link{AIC}}
 #'
 #' @keywords GAM AICc model-selection
+#' @export
 
 AICc <- function(object){
   if(class(object)[1] != "Gam" & class(object)[1] != "gam") stop("'object' must be of class 'Gam' or 'gam'")

@@ -38,6 +38,7 @@
 #'
 #' @keywords
 #' prediction, odds ratio, confidence interval, OR, predict method
+#' @export
 
 predict.OR <- function(object, predictor, prob=NULL, pred.value=NULL, conf.level=0.95, prediction.values=NULL, round.x=NULL, ref.label=NULL, ...) {
   if ( missing(object) ) {stop("Missing object");}

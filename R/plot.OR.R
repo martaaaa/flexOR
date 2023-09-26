@@ -50,12 +50,13 @@
 #' }
 #'
 #' @keywords smooth odds ratios plot
+#' @export
 #' @importFrom graphics matplot axis polygon abline arrows text
 #' @importFrom stats update predict vcov quantile qnorm
 #'
 #' @importFrom gam gam
 #' @importFrom mgcv gam
-#' @export
+#' 
 
 
 plot.OR <- function(
