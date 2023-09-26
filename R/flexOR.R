@@ -66,11 +66,11 @@ flexOR <- function(data, response=NULL, formula=NULL, gamfit) {
   mydata2 <- deparse( substitute(data) );
   if ( missing(gamfit) ) {modelfit <- "FALSE";}
   if ( !missing(gamfit) ) {
-    if ( !inherits(gamfit, "Gam") ) {stop("Argument gamfit must be of class Gam");}
+    if ( !inherits(gamfit, "gam") ) {stop("Argument gamfit must be of class Gam");}
   }
   if ( !is.data.frame(data) ) {stop("data must be of class data.frame");}
   if (modelfit == "TRUE") {
-    if ( !inherits(gamfit, "Gam") ) {stop("Object gamfit must be of class Gam");}
+    if ( !inherits(gamfit, "gam") ) {stop("Object gamfit must be of class Gam");}
     if ( is.null(gamfit$x) ) {stop("The argumment x in the Gam object is missing");}
     fit <- gamfit;
   }
