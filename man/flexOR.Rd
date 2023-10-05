@@ -59,7 +59,6 @@ result <- flexOR(data = data1, response = "y", gamfit = fit)
 # Print the odds ratios and CIs
 print(result)
 }
-
 }
 \references{
 Include relevant references here.

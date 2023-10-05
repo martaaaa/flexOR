@@ -43,7 +43,7 @@
 #' )
 #'
 #' # Fit a smooth odds ratio model
-#' mod1 <- smoothOR(data = data1, response = variable, formula = ~covariate1 + covariate2)
+#' mod1 <- flexOR(data=data1, response="diabetes", formula=~age+mass)
 #'
 #' # Plot the smooth odds ratios
 #' plot.OR(mod1, predictor = "covariate1")
@@ -51,9 +51,8 @@
 #'
 #' @keywords smooth odds ratios plot
 #' @export
-#' @importFrom graphics matplot axis polygon abline arrows text plot
 #' @importFrom stats update predict vcov quantile qnorm
-#'
+#' @import graphics
 #' @importFrom gam gam
 #' @importFrom mgcv gam
 #' 

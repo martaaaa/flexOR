@@ -88,7 +88,7 @@ data1 <- data.frame(
 )
 
 # Fit a smooth odds ratio model
-mod1 <- smoothOR(data = data1, response = variable, formula = ~covariate1 + covariate2)
+mod1 <- flexOR(data=data1, response="diabetes", formula=~age+mass)
 
 # Plot the smooth odds ratios
 plot.OR(mod1, predictor = "covariate1")
