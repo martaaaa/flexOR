@@ -38,7 +38,8 @@
 #' @export
 
 AICc <- function(object){
-  if(class(object)[1] != "Gam" & class(object)[1] != "gam") stop("'object' must be of class 'Gam' or 'gam'")
+  if(class(object)[1] != "Gam" & class(object)[1] != "gam")
+    stop("'object' must be of class 'Gam' or 'gam'")
   ll <- logLik(object)
   d <- attributes(ll)$df
   if(class(object)[1]=="Gam") n <- attributes(ll)$nobs
@@ -48,5 +49,4 @@ AICc <- function(object){
   caic[d+1 >= n] <- Inf
   attributes(caic)[c('df','nobs','class')] <- NULL
   caic
-}
-
+} # AICc

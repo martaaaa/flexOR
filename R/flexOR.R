@@ -59,7 +59,6 @@
 #' @export
 #' @keywords GAM odds-ratio binary-data confidence-interval
 
-
 flexOR <- function(data, response_var = NULL, formula_var = NULL, gamfit_var) {
   modelfit <- "TRUE"
   mydata2 <- deparse(substitute(data))
@@ -134,7 +133,7 @@ flexOR <- function(data, response_var = NULL, formula_var = NULL, gamfit_var) {
     }
     
     covar <- as.formula(paste(" ny ~ ", paste(fmla, collapse = "+")))
-    fit <- gam(covar, data = data, xvar = TRUE, family = binomial)
+    fit <- gam(covar, data = data, x = TRUE, family = binomial)
   }
   
   a1 <- c()
@@ -188,5 +187,4 @@ flexOR <- function(data, response_var = NULL, formula_var = NULL, gamfit_var) {
   }
   
   return(object)
-}
-
+} # flexOR

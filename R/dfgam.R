@@ -263,4 +263,4 @@ dfgam <- function(response, nl.predictors, other.predictors=NULL, smoother="s", 
   if(!is.null(msg)) print(msg)
   ob <- list(fit=fit, df=res, method=method, nl.predictors=nl.predictors, other.predictors=other.predictors)
   return(ob)
-}
+} # dfgam

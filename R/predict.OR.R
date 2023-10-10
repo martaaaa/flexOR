@@ -172,4 +172,4 @@ predict.OR <- function(object, predictor, prob=NULL, pred.value=NULL, conf.level
   colnames(matriz) <- mat.name;
   rownames(matriz) <- rep( "", length(prediction.values) );
   return(matriz);
-}
+} # predict.OR
