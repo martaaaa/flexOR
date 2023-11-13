@@ -1,8 +1,7 @@
-#' Plot Smooth Odds Ratios
+#' @title Plot.OR: Plot Smooth Odds Ratios
 #'
 #' Plots smooth odds ratios along with confidence intervals for a specified predictor.
 #'
-#' @title Plot Smooth Odds Ratios
 #' @aliases plot.OR
 #' @description This function plots smooth odds ratios along with confidence intervals for a specified predictor.
 #'
@@ -31,8 +30,7 @@
 #' @examples
 #' \dontrun{
 #' # Load necessary libraries
-#' library(smoothOR)
-#' library(mgcv)
+#' library(flexOR)
 #'
 #' # Simulate data
 #' set.seed(123)
@@ -43,19 +41,17 @@
 #' )
 #'
 #' # Fit a smooth odds ratio model
-#' mod1 <- flexOR(data=data1, response="diabetes", formula=~age+mass)
+#' mod1 <- flexOR(data=data1, response=y, formula=~z+x)
 #'
 #' # Plot the smooth odds ratios
 #' plot.OR(mod1, predictor = "covariate1")
 #' }
 #'
 #' @keywords smooth odds ratios plot
-#' @export
 #' @importFrom stats update predict vcov quantile qnorm
 #' @import graphics
 #' @importFrom gam gam
-#' @importFrom mgcv gam
-#' 
+#' @export
 
 plot.OR <- function(
     x, predictor, prob=NULL, pred.value=NULL, conf.level=0.95, round.x=NULL,

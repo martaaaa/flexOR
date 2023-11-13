@@ -1,12 +1,12 @@
-#' flexOR: Flexible Odds Ratio Computation for GAM Models
+#' @title flexOR: Flexible Odds Ratio Computation for GAM Models
 #'
-#' Calculate odds ratios (ORs) and associated confidence intervals (CIs) for specified
+#' Calculate odds ratios (ORs) for specified
 #' predictors in generalized additive models (GAMs).
 #'
 #' @aliases flexOR
 #'
 #' @description
-#' The `flexOR` function computes odds ratios and CIs for predictors in GAM models.
+#' The `flexOR` function computes odds ratios for predictors in GAM models.
 #' It provides flexibility in specifying predictors using either a data frame, a response
 #' variable and a formula, or a pre-fitted GAM model. The function is useful for
 #' understanding the impact of predictors on binary outcomes in GAMs.
@@ -15,13 +15,12 @@
 #' flexOR(data, response = NULL, formula = NULL, gamfit)
 #'
 #' @param data A data frame containing the variables.
-#' @param response The response variable as a character string.
-#' @param formula A formula specifying the model if not using a pre-fitted GAM.
-#' @param gamfit A pre-fitted GAM model (class 'Gam').
+#' @param response_var The response variable as a character string.
+#' @param formula_var A formula specifying the model if not using a pre-fitted GAM.
+#' @param gamfit_var A pre-fitted GAM model (class 'Gam').
 #'
 #' @details
-#' The `flexOR` function calculates odds ratios and CIs for specified predictors in
-#' a GAM model. It accepts three different ways of specifying the model: by providing
+#' It accepts three different ways of specifying the model: by providing
 #' the data frame and response variable, by specifying the formula, or by providing
 #' a pre-fitted GAM model.
 #'
@@ -32,13 +31,10 @@
 #'   \item \code{gamfit}: The fitted GAM model.
 #' }
 #'
-#' @references
-#' Include relevant references here.
-#'
 #' @examples
 #' \dontrun{
 #' # Load necessary libraries
-#' library(mgcv)
+#' library(gam)
 #'
 #' # Simulate data
 #' set.seed(123)
@@ -56,13 +52,12 @@
 #' # Print the odds ratios and CIs
 #' print(result)
 #' }
-#' @export
 #' @keywords GAM odds-ratio binary-data confidence-interval
+#' @export
 
 flexOR <- function(data, response_var = NULL, formula_var = NULL, gamfit_var) {
   modelfit <- "TRUE"
   mydata2 <- deparse(substitute(data))
-  
   if (missing(gamfit_var)) {
     modelfit <- "FALSE"
   }
@@ -133,7 +128,7 @@ flexOR <- function(data, response_var = NULL, formula_var = NULL, gamfit_var) {
     }
     
     covar <- as.formula(paste(" ny ~ ", paste(fmla, collapse = "+")))
-    fit <- gam(covar, data = data, x = TRUE, family = binomial)
+    fit <- gam::gam(covar, data = data, x = TRUE, family = binomial)
   }
   
   a1 <- c()
@@ -173,7 +168,7 @@ flexOR <- function(data, response_var = NULL, formula_var = NULL, gamfit_var) {
   
   # Chamada separada para gam.fit3
   if (modelfit == "TRUE") {
-    gamfit_var <- mgcv:::gam.fit3(
+    gamfit_var <- gam.fit3(
       x = fit$data, y = fit$y, weights = fit$w,
       start = fit$sp, offset = fit$offset, optimizer = fit$optimizer,
       control = fit$control, EB = fit$Eb, U = fit$U, penalty = fit$penalty,

@@ -1,4 +1,4 @@
-#' @title Predict Method for OR Objects
+#' @title predict.OR : Predict Method for OR Objects
 #'
 #' @description
 #' Predicts values using a fitted OR model.
@@ -23,21 +23,12 @@
 #' \dontrun{
 #' # Example of how to use predict.OR
 #' library(gam)
-#' library(mlbench)
-#' data(PimaIndiansDiabetes2)
-#' str(PimaIndiansDiabetes2)
-#'
-#' fit <- gam(diabetes ~ s(age), data=PimaIndiansDiabetes2, family=binomial(), x=TRUE)
-#' summary(fit)
-#' plot(fit, se=T, ask=TRUE)
 #'
 #' pdval <- c(21, 25, 29, 30, 31, 34, 35, 38, 40, 41, 41, 45, 50, 60, 65, 80)
-#' predict.OR(fit, predictor="age", pred.value=30, conf.level=0.95, prediction.values=pdval)
+#' predict.OR(fit, predictor="x", pred.value=30, conf.level=0.95, prediction.values=pdval)
 #' }
 #'
-#'
-#' @keywords
-#' prediction, odds ratio, confidence interval, OR, predict method
+#' @keywords prediction, odds ratio, confidence interval, OR, predict method
 #' @export
 
 predict.OR <- function(object, predictor, prob=NULL, pred.value=NULL, conf.level=0.95, prediction.values=NULL, round.x=NULL, ref.label=NULL, ...) {

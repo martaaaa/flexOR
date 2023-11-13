@@ -1,4 +1,4 @@
-#' dfgam: Degrees of Freedom Selection for GAM Models
+#' @title dfgam: Degrees of Freedom Selection for GAM Models
 #'
 #' Calculate the degrees of freedom for generalized additive models (GAMs) using
 #' a selection method based on AIC, AICc, or BIC criteria.
@@ -20,11 +20,6 @@
 #' @param data The data frame containing the variables.
 #' @param step The step size for grid search when there are multiple non-linear predictors.
 #'
-#' @details
-#' The `dfgam` function calculates the degrees of freedom for specified non-linear
-#' predictors in a GAM model. It fits multiple GAMs with different degrees of freedom
-#' and selects the best model based on the chosen selection method (AIC, AICc, or BIC).
-#'
 #' @return
 #' A list containing the following components:
 #' \itemize{
@@ -38,7 +33,6 @@
 #' @examples
 #' \dontrun{
 #' # Load necessary libraries
-#' library(mgcv)
 #'
 #' # Simulate data
 #' set.seed(123)
@@ -73,7 +67,7 @@ dfgam <- function(response, nl.predictors, other.predictors=NULL, smoother="s", 
   df <- rep(1, length(nl.predictors));
   fmla <- c();
   nl.fmla <- c();
-
+  
   # df from simple regression models using mgcv::gam
   for (i in 1:nnl) {
     fmla[i] <- paste("s(", nl.predictors[i], ")", collapse="+")
@@ -83,7 +77,7 @@ dfgam <- function(response, nl.predictors, other.predictors=NULL, smoother="s", 
     fmla[i] <- c(paste("s(", nl.predictors[i], ",df=",df[i], ")", collapse=""))
     nl.fmla[i] <- paste("s(", nl.predictors[i], ",df=",df[i], ")", collapse="+")
   }
-
+  
   if ( !missing(other.predictors) ) {
     nop <- length(other.predictors);
     for (i in 1:nop) {
@@ -91,15 +85,14 @@ dfgam <- function(response, nl.predictors, other.predictors=NULL, smoother="s", 
       if (sum(p2) == 0) {stop("Check variables in argument 'other.predictors'");}
     }
   }
-
-
+  
   if ( missing(other.predictors) & nnl > 1){
     fmla <- paste("s(", nl.predictors, ")", collapse="+");
     fmla4 <- as.formula( paste( names(data)[p1]," ~ ", fmla, collapse = "+") ) ;
     fit0 <- mgcv::gam(fmla4, data=data, family=binomial)
     df <- summary(fit0)$edf
   }
-
+  
   if ( !missing(other.predictors) & nnl > 1){
     fmla <- paste("s(", nl.predictors, ")", collapse="+");
     fmla2 <- paste(other.predictors, collapse="+");
@@ -108,17 +101,17 @@ dfgam <- function(response, nl.predictors, other.predictors=NULL, smoother="s", 
     fit0 <- mgcv::gam(fmla4, data=data, family=binomial)
     df <- summary(fit0)$edf
   }
-
-
+  
+  
   if(nnl > 1){
-    opfmla <- paste(other.predictors, collapse="+")
+    opfmla <- paste(other.predictors, collapse="+") 
     covar2 <- c(paste( nl.fmla, collapse = "+"), opfmla)
     covar2 <- paste(covar2, collapse ="+")
     fmla2 <- as.formula( paste( names(data)[p1]," ~ ", covar2, collapse = "+") ) ;
     fit <- gam(fmla2, data=data, family=binomial)
   }
-
-
+  
+  
   mat <- array(NA, dim=c(41,4,nnl)) #df, AIC, BIC, cAIC     #Reduce grid to became faster!
   dfAIC <- df
   dfBIC <- df
@@ -128,7 +121,7 @@ dfgam <- function(response, nl.predictors, other.predictors=NULL, smoother="s", 
   df.BIC <- df
   df.AICc <- df
   msg <- c()
-
+  
   if(nnl == 1 & missing(other.predictors) ) {   #OK!
     covar <- as.formula( paste( names(data)[p1], "~", nl.predictors ) );
     fit <- gam(covar, data=data, family=binomial)
@@ -151,22 +144,22 @@ dfgam <- function(response, nl.predictors, other.predictors=NULL, smoother="s", 
     if(method == "BIC") df <- df.BIC
     if(method == "AICc") df <- df.AICc
   }
-
+  
   if(nnl == 1 & !missing(other.predictors) ) {   #OK!
-
+    
     auxop <- paste(other.predictors, collapse="+")
     auxnl <- paste(nl.predictors, collapse="+")
     aux0 <- paste(c(auxnl,auxop), collapse="+")
     fmla4 <- as.formula( paste( names(data)[p1]," ~ ", aux0, collapse = "+") ) ;
     fit0 <- gam(fmla4, data=data, family=binomial)
     lAIC <- AIC(fit0)
-
+    
     auxi <- round(df,1) + seq(-2,2,0.1)
     if (auxi[1] < 1) auxi <- 1.1 + auxi - auxi[1]
     mat[,1,1] <- auxi
     for(h in 1:lmat){
       ndf <- mat[h,1,1]
-
+      
       aux1 <- paste("s(", nl.predictors[1], ",df=",ndf, ")", collapse="+")
       aux2 <- paste(c(aux1,auxop), collapse="+")
       fmla3 <- as.formula( paste( names(data)[p1]," ~ ", aux2, collapse = "+") ) ;
@@ -181,21 +174,21 @@ dfgam <- function(response, nl.predictors, other.predictors=NULL, smoother="s", 
     if(method == "BIC") df <- df.BIC
     if(method == "AICc") df <- df.AICc
   }
-
-
-  if(nnl > 1 & !missing(other.predictors) ) { #OK!
+  
+  
+  if(nnl > 1 & !missing(other.predictors) ) { #OK! 
     for (m in 1:step){
       auxop <- paste(other.predictors, collapse="+")
-
+      
       for(k in 1:nnl){
-
+        
         auxi <- round(df[k],1) + seq(-2,2,0.1)
         if (auxi[1] < 1) auxi <- 1.1 + auxi - auxi[1]
         mat[,1,k] <- auxi
         for(h in 1:lmat){
           ndf <- df
           ndf[k] <- mat[h,1,k]
-
+          
           aux1 <- paste("s(", nl.predictors, ",df=",ndf, ")", collapse="+")
           aux2 <- paste(c(aux1,auxop), collapse="+")
           fmla3 <- as.formula( paste( names(data)[p1]," ~ ", aux2, collapse = "+") ) ;
@@ -211,20 +204,20 @@ dfgam <- function(response, nl.predictors, other.predictors=NULL, smoother="s", 
       }
     }
   }
-
-  if(nnl > 1 & missing(other.predictors) ) { #ok
+  
+  if(nnl > 1 & missing(other.predictors) ) { #ok 
     for (m in 1:step){
       auxop <- paste(other.predictors, collapse="+")
-
+      
       for(k in 1:nnl){
-
+        
         auxi <- round(df[k],1) + seq(-2,2,0.1)
         if (auxi[1] < 1) auxi <- 1.1 + auxi - auxi[1]
         mat[,1,k] <- auxi
         for(h in 1:lmat){
           ndf <- df
           ndf[k] <- mat[h,1,k]
-
+          
           aux1 <- paste("s(", nl.predictors, ",df=",ndf, ")", collapse="+")
           #aux2 <- paste(c(aux1,auxop), collapse="+")
           fmla3 <- as.formula( paste( names(data)[p1]," ~ ", aux1, collapse = "+") ) ;
@@ -240,13 +233,13 @@ dfgam <- function(response, nl.predictors, other.predictors=NULL, smoother="s", 
       }
     }
   }
-
-  #return
+  
+  #return	
   res <- matrix(NA,ncol=1, nrow=nnl)
   colnames(res) <- "df"
   rownames(res) <- nl.predictors
   res[1:nnl] <- df[1:nnl]
-
+  
   if(missing(other.predictors)){
     aux1 <- paste("s(", nl.predictors, ",df=",df, ")", collapse="+")
     fmla3 <- as.formula( paste( names(data)[p1]," ~ ", aux1, collapse = "+") ) ;
