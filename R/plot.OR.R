@@ -30,21 +30,23 @@
 #' @examples
 #' \dontrun{
 #' # Load necessary libraries
-#' library(flexOR)
+#' @examples
+#' \dontrun{
+#' # Load necessary libraries
+#' library(gam)
+#' library(mlbench)
 #'
-#' # Simulate data
-#' set.seed(123)
-#' data1 <- data.frame(
-#'   covariate1 = rnorm(100),
-#'   covariate2 = rnorm(100),
-#'   variable = rbinom(100, 1, 0.3)
-#' )
+#' # Load dataset
+#' data(PimaIndiansDiabetes2)
 #'
-#' # Fit a smooth odds ratio model
-#' mod1 <- flexOR(data=data1, response=y, formula=~z+x)
+#' # Fit a GAM model
+#' fit <- gam(diabetes ~ s(age) + s(mass) + s(pedigree) + pressure + glucose, data = PimaIndiansDiabetes2, family = binomial)
+#'
+#' # Calculate smooth odds ratios using flexOR
+#' mod1 <- flexOR(data = PimaIndiansDiabetes2, response = "diabetes", gamfit = fit)
 #'
 #' # Plot the smooth odds ratios
-#' plot.OR(mod1, predictor = "covariate1")
+#' plot.OR(mod1, predictor = "age")
 #' }
 #'
 #' @keywords smooth odds ratios plot

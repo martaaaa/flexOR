@@ -33,16 +33,16 @@
 #' @examples
 #' \dontrun{
 #' # Load necessary libraries
+#' library(mlbench)
+#' 
+#' # Load dataset
+#' data(PimaIndiansDiabetes2)
 #'
-#' # Simulate data
-#' set.seed(123)
-#' data1 <- data.frame(
-#'   x = rnorm(100),
-#'   y = rnorm(100)
-#' )
+#' # Fit a GAM model
+#' fit <- gam(diabetes ~ s(age) + s(mass) + s(pedigree) + pressure + glucose, data = PimaIndiansDiabetes2, family = binomial)
 #'
 #' # Calculate degrees of freedom using AIC
-#' result <- dfgam(response = y ~ x, nl.predictors = "x", data = data1)
+#' df_result <- dfgam(response = "diabetes", nl.predictors = c("age", "mass", "pedigree"), smoother = "s", method = "AIC", data = PimaIndiansDiabetes2)
 #' }
 #'
 #' @keywords GAM degrees-of-freedom model-selection smoothing AIC AICc BIC

@@ -21,12 +21,21 @@
 #'
 #' @examples
 #' \dontrun{
-#' # Example of how to use predict.OR
-#' library(gam)
+#' @examples
+#' \dontrun{
+#' # Load necessary libraries
+#' library(mlbench)
 #'
+#' # Load the Pima Indians Diabetes dataset
+#' data(PimaIndiansDiabetes2)
+#'
+#' # Fit a GAM model
+#' fit <- gam(diabetes ~ s(age) + s(mass) + s(pedigree) + pressure + glucose, data = PimaIndiansDiabetes2, family = binomial)
+#'
+#' # Predict the probabilities using predict.OR
 #' pdval <- c(21, 25, 29, 30, 31, 34, 35, 38, 40, 41, 41, 45, 50, 60, 65, 80)
-#' predict.OR(fit, predictor="x", pred.value=30, conf.level=0.95, prediction.values=pdval)
-#' }
+#' predict.OR(fit, predictor="age", pred.value=30, conf.level=0.95, prediction.values=pdval)
+#' #' }
 #'
 #' @keywords prediction, odds ratio, confidence interval, OR, predict method
 #' @export

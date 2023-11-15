@@ -16,19 +16,16 @@
 #' @examples
 #' \dontrun{
 #' # Load necessary libraries
-#'
-#' # Simulate data
-#' set.seed(123)
-#' data1 <- data.frame(
-#'   x = rnorm(100),
-#'   y = rnorm(100)
-#' )
-#'
+#' library(mlbench)
+#' 
+#' # Load dataset
+#' data(PimaIndiansDiabetes2)
+#' 
 #' # Fit a GAM model
-#' mod <- gam(y ~ s(x), data = data1)
+#' fit <- gam(diabetes ~ s(age) + s(mass) + s(pedigree) + pressure + glucose, data = PimaIndiansDiabetes2, family = binomial)
 #'
 #' # Calculate AICc
-#' AICc_value <- AICc(mod)
+#' AICc_value <- AICc(fit)
 #' }
 #' @seealso
 #' \code{\link{gam}}, \code{\link{logLik}}, \code{\link{AIC}}

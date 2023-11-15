@@ -34,24 +34,18 @@
 #' @examples
 #' \dontrun{
 #' # Load necessary libraries
-#' library(gam)
-#'
-#' # Simulate data
-#' set.seed(123)
-#' data1 <- data.frame(
-#'   x = rnorm(100),
-#'   y = rbinom(100, 1, 0.5)
-#' )
+#' library(mlbench)
+#' 
+#' # Load dataset
+#' data(PimaIndiansDiabetes2)
 #'
 #' # Fit a GAM model
-#' fit <- gam(y ~ s(x), data = data1, family = binomial)
+#' fit <- gam(diabetes ~ s(age) + s(mass) + s(pedigree) + pressure + glucose, data = PimaIndiansDiabetes2, family = binomial)
 #'
 #' # Calculate odds ratios using flexOR
-#' result <- flexOR(data = data1, response = "y", gamfit = fit)
-#'
-#' # Print the odds ratios and CIs
-#' print(result)
+#' df_result <- flexOR(data = PimaIndiansDiabetes2, response = "diabetes", gamfit = fit)
 #' }
+#' 
 #' @keywords GAM odds-ratio binary-data confidence-interval
 #' @export
 
