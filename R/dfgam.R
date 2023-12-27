@@ -47,7 +47,7 @@
 #'
 #' @keywords GAM degrees-of-freedom model-selection smoothing AIC AICc BIC
 #' @export
-
+#' 
 dfgam <- function(response, nl.predictors, other.predictors=NULL, smoother="s", method = "AIC", data, step=NULL) {
   #options(warn=-1);
   if ( missing(data) ) {stop("The argument data is missing");}
@@ -56,7 +56,7 @@ dfgam <- function(response, nl.predictors, other.predictors=NULL, smoother="s", 
   if ( missing(smoother) ) {smoother <- "s";}
   if (smoother != "s") {stop("argument 'smoother' must be 's'");}
   if ( missing(method) ) {method <- "AIC";}
-  if ( method != "AIC" & method != "AICc" & method != "BIC") {stop("The argument 'method' is not valid");}  # include other methods from mgcv?
+  if ( method != "AIC" & method != "AICc" & method != "BIC" & method != "REML" & method != "GCV.Cp") {stop("The argument 'method' is not valid");}  # include other methods from mgcv?
   if (missing(step)) step <- 3
   if (step < 1 | step > 10) stop("'step' must be between 1 and 10")
   p0 <- match(names(data), response, nomatch=0);
@@ -68,121 +68,45 @@ dfgam <- function(response, nl.predictors, other.predictors=NULL, smoother="s", 
   fmla <- c();
   nl.fmla <- c();
   
-  # df from simple regression models using mgcv::gam
-  for (i in 1:nnl) {
-    fmla[i] <- paste("s(", nl.predictors[i], ")", collapse="+")
-    covar <- as.formula( paste( names(data)[p1], "~", paste(fmla[i], collapse = "+") ) );
-    fit <- mgcv::gam(covar, data=data, family=binomial);    #melhor utilizar o modelo reg multipla logo a partida
-    df[i] <- sum(fit$edf)-fit$nsdf
-    fmla[i] <- c(paste("s(", nl.predictors[i], ",df=",df[i], ")", collapse=""))
-    nl.fmla[i] <- paste("s(", nl.predictors[i], ",df=",df[i], ")", collapse="+")
+  # df for nonlinear predictors 
+  if(is.null(other.predictors)){
+    covar <- paste("s(", nl.predictors, ")", collapse="+")
+    fmla <- as.formula( paste( names(data)[p1], "~", paste(fmla[i], collapse = "+") ) );
   }
-  
-  if ( !missing(other.predictors) ) {
+  if(!is.null(other.predictors)){
     nop <- length(other.predictors);
     for (i in 1:nop) {
       p2 <- match(names(data), other.predictors[i], nomatch=0);
       if (sum(p2) == 0) {stop("Check variables in argument 'other.predictors'");}
     }
+    covar1 <- paste("s(", nl.predictors, ")", collapse="+");
+    covar2 <- paste(other.predictors, collapse="+");
+    covar <- paste (c(covar1, covar2), collapse="+");
+    fmla <- as.formula( paste( names(data)[p1]," ~ ", covar, collapse = "+") ) ;
   }
   
-  if ( missing(other.predictors) & nnl > 1){
-    fmla <- paste("s(", nl.predictors, ")", collapse="+");
-    fmla4 <- as.formula( paste( names(data)[p1]," ~ ", fmla, collapse = "+") ) ;
-    fit0 <- mgcv::gam(fmla4, data=data, family=binomial)
-    df <- summary(fit0)$edf
-  }
-  
-  if ( !missing(other.predictors) & nnl > 1){
-    fmla <- paste("s(", nl.predictors, ")", collapse="+");
-    fmla2 <- paste(other.predictors, collapse="+");
-    fmla3 <- paste (c(fmla, fmla2), collapse="+");
-    fmla4 <- as.formula( paste( names(data)[p1]," ~ ", fmla, collapse = "+") ) ;
-    fit0 <- mgcv::gam(fmla4, data=data, family=binomial)
-    df <- summary(fit0)$edf
-  }
-  
-  
-  if(nnl > 1){
-    opfmla <- paste(other.predictors, collapse="+") 
-    covar2 <- c(paste( nl.fmla, collapse = "+"), opfmla)
-    covar2 <- paste(covar2, collapse ="+")
-    fmla2 <- as.formula( paste( names(data)[p1]," ~ ", covar2, collapse = "+") ) ;
-    fit <- gam(fmla2, data=data, family=binomial)
-  }
-  
-  
-  mat <- array(NA, dim=c(41,4,nnl)) #df, AIC, BIC, cAIC     #Reduce grid to became faster!
-  dfAIC <- df
-  dfBIC <- df
-  dfAICc <- df
-  lmat <- dim(mat)[1]
-  df.AIC <- df
-  df.BIC <- df
-  df.AICc <- df
+  if (method == "REML")  {fit <- mgcv::gam(fmla, data=data, family=binomial, method = "REML");}
+  if (method == "GCV.Cp")  {fit <- mgcv::gam(fmla, data=data, family=binomial, method = "GCV.Cp");}
+  if (method != "REML" & method != "GCV.Cp") {fit <- mgcv::gam(fmla, data=data, family=binomial, method = "REML");}
+  df <- summary(fit)$edf
+  ndf <- df
   msg <- c()
   
-  if(nnl == 1 & missing(other.predictors) ) {   #OK!
-    covar <- as.formula( paste( names(data)[p1], "~", nl.predictors ) );
-    fit <- gam(covar, data=data, family=binomial)
-    lAIC <- AIC(fit)
-    auxi <- round(df,1) + seq(-2,2,0.1)
-    if (auxi[1] < 1) auxi <- 1.1 + auxi - auxi[1]
-    mat[,1,1] <- auxi
-    for(h in 1:lmat){
-      ndf <- mat[h,1,1]
-      aux <- paste("s(", nl.predictors, ",df=",ndf, ")", collapse="+")
-      covar <- as.formula( paste( names(data)[p1], "~", paste(aux, collapse = "+") ) );
-      fit <- gam(covar, data=data, family=binomial);
-      mat[h,2,1] <- AIC(fit); mat[h,3,1] <- BIC(fit); mat[h,4,1] <- AICc(fit)
-    }
-    df.AIC <- mat[which.min(mat[,2,1]),1,1]
-    df.BIC <- mat[which.min(mat[,3,1]),1,1]
-    df.AICc <- mat[which.min(mat[,4,1]),1,1]
-    if(lAIC < min(mat[,2,1])) msg <- paste("The effect of",nl.predictors,"is linear")
-    if(method == "AIC") df <- df.AIC
-    if(method == "BIC") df <- df.BIC
-    if(method == "AICc") df <- df.AICc
-  }
-  
-  if(nnl == 1 & !missing(other.predictors) ) {   #OK!
+  # get df from AIC, AICc and BIC: starting point REML
+  if (method == "AIC" | method == "AICc" | method == "BIC"){
+    mat <- array(NA, dim=c(41,4,nnl)) #df, AIC, BIC, AICc     #Reduce grid to became faster!
+    dfAIC <- df
+    dfBIC <- df
+    dfAICc <- df
+    lmat <- dim(mat)[1]
+    df.AIC <- df
+    df.BIC <- df
+    df.AICc <- df
     
-    auxop <- paste(other.predictors, collapse="+")
-    auxnl <- paste(nl.predictors, collapse="+")
-    aux0 <- paste(c(auxnl,auxop), collapse="+")
-    fmla4 <- as.formula( paste( names(data)[p1]," ~ ", aux0, collapse = "+") ) ;
-    fit0 <- gam(fmla4, data=data, family=binomial)
-    lAIC <- AIC(fit0)
-    
-    auxi <- round(df,1) + seq(-2,2,0.1)
-    if (auxi[1] < 1) auxi <- 1.1 + auxi - auxi[1]
-    mat[,1,1] <- auxi
-    for(h in 1:lmat){
-      ndf <- mat[h,1,1]
-      
-      aux1 <- paste("s(", nl.predictors[1], ",df=",ndf, ")", collapse="+")
-      aux2 <- paste(c(aux1,auxop), collapse="+")
-      fmla3 <- as.formula( paste( names(data)[p1]," ~ ", aux2, collapse = "+") ) ;
-      fit <- gam(fmla3, data=data, family=binomial)
-      mat[h,2,1] <- AIC(fit); mat[h,3,1] <- BIC(fit); mat[h,4,1] <- AIC(fit)
-    }
-    df.AIC <- mat[which.min(mat[,2,1]),1,1]
-    df.BIC <- mat[which.min(mat[,3,1]),1,1]
-    df.AICC <- mat[which.min(mat[,4,1]),1,1]
-    if(lAIC < min(mat[,2,1])) msg <- paste("The effect of",nl.predictors,"is linear")
-    if(method == "AIC") df <- df.AIC
-    if(method == "BIC") df <- df.BIC
-    if(method == "AICc") df <- df.AICc
-  }
-  
-  
-  if(nnl > 1 & !missing(other.predictors) ) { #OK! 
+    #loop for the number of steps to get a fine tunning
     for (m in 1:step){
-      auxop <- paste(other.predictors, collapse="+")
-      
       for(k in 1:nnl){
-        
-        auxi <- round(df[k],1) + seq(-2,2,0.1)
+        auxi <- round(df[k],1) + seq(-2, 2, 0.1)
         if (auxi[1] < 1) auxi <- 1.1 + auxi - auxi[1]
         mat[,1,k] <- auxi
         for(h in 1:lmat){
@@ -190,38 +114,10 @@ dfgam <- function(response, nl.predictors, other.predictors=NULL, smoother="s", 
           ndf[k] <- mat[h,1,k]
           
           aux1 <- paste("s(", nl.predictors, ",df=",ndf, ")", collapse="+")
-          aux2 <- paste(c(aux1,auxop), collapse="+")
+          if (is.null(other.predictors)) {aux2 <- aux1}
+          else {aux2 <- paste(c(aux1,covar2), collapse="+")}
           fmla3 <- as.formula( paste( names(data)[p1]," ~ ", aux2, collapse = "+") ) ;
-          fit <- gam(fmla3, data=data, family=binomial)
-          mat[h,2,k] <- AIC(fit); mat[h,3,k] <- BIC(fit); mat[h,4,k] <- AICc(fit)
-        }
-        df.AIC[k] <- mat[which.min(mat[,2,k]),1,k]
-        df.BIC[k] <- mat[which.min(mat[,3,k]),1,k]
-        df.AICc[k] <- mat[which.min(mat[,4,k]),1,k]
-        if(method == "AIC") df[k] <- df.AIC[k]
-        if(method == "BIC") df[k] <- df.BIC[k]
-        if(method == "AICc") df[k] <- df.AICc[k]
-      }
-    }
-  }
-  
-  if(nnl > 1 & missing(other.predictors) ) { #ok 
-    for (m in 1:step){
-      auxop <- paste(other.predictors, collapse="+")
-      
-      for(k in 1:nnl){
-        
-        auxi <- round(df[k],1) + seq(-2,2,0.1)
-        if (auxi[1] < 1) auxi <- 1.1 + auxi - auxi[1]
-        mat[,1,k] <- auxi
-        for(h in 1:lmat){
-          ndf <- df
-          ndf[k] <- mat[h,1,k]
-          
-          aux1 <- paste("s(", nl.predictors, ",df=",ndf, ")", collapse="+")
-          #aux2 <- paste(c(aux1,auxop), collapse="+")
-          fmla3 <- as.formula( paste( names(data)[p1]," ~ ", aux1, collapse = "+") ) ;
-          fit <- gam(fmla3, data=data, family=binomial)
+          fit <- gam::gam(fmla3, data=data, family=binomial)
           mat[h,2,k] <- AIC(fit); mat[h,3,k] <- BIC(fit); mat[h,4,k] <- AICc(fit)
         }
         df.AIC[k] <- mat[which.min(mat[,2,k]),1,k]
@@ -252,7 +148,7 @@ dfgam <- function(response, nl.predictors, other.predictors=NULL, smoother="s", 
     fmla3 <- as.formula( paste( names(data)[p1]," ~ ", aux2, collapse = "+") ) ;
     fit <- gam(fmla3, data=data, family=binomial)
   }
-
+  
   if(!is.null(msg)) print(msg)
   ob <- list(fit=fit, df=res, method=method, nl.predictors=nl.predictors, other.predictors=other.predictors)
   return(ob)
