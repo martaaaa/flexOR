@@ -30,10 +30,6 @@
 #' @examples
 #' \dontrun{
 #' # Load necessary libraries
-#' @examples
-#' \dontrun{
-#' # Load necessary libraries
-#' library(gam)
 #' library(mlbench)
 #'
 #' # Load dataset

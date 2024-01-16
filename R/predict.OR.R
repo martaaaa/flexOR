@@ -21,8 +21,6 @@
 #'
 #' @examples
 #' \dontrun{
-#' @examples
-#' \dontrun{
 #' # Load necessary libraries
 #' library(mlbench)
 #'
@@ -35,7 +33,8 @@
 #' # Predict the probabilities using predict.OR
 #' pdval <- c(21, 25, 29, 30, 31, 34, 35, 38, 40, 41, 41, 45, 50, 60, 65, 80)
 #' predict.OR(fit, predictor="age", pred.value=30, conf.level=0.95, prediction.values=pdval)
-#' #' }
+#' #' 
+#' }
 #'
 #' @keywords prediction, odds ratio, confidence interval, OR, predict method
 #' @export
