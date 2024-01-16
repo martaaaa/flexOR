@@ -171,5 +171,6 @@ predict.OR <- function(object, predictor, prob=NULL, pred.value=NULL, conf.level
   else {mat.name <- c( ref.label, "LnOR", paste("lower .", conf.level*100, sep=""), paste("upper .", conf.level*100, sep="") );}
   colnames(matriz) <- mat.name;
   rownames(matriz) <- rep( "", length(prediction.values) );
-  return(matriz);
+  #return(matriz);
+  return(list(matriz = matriz, tmat = tmat))
 } # predict.OR
