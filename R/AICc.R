@@ -1,5 +1,6 @@
 #' @title AICc: Calculation for GAM Models
 #'
+#' @description
 #' Calculate AICc (Akaike Information Criterion corrected for small sample sizes)
 #' for Generalized Additive Models (GAM).
 #'

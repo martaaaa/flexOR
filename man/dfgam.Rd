@@ -40,35 +40,28 @@ A list containing the following components:
 }
 }
 \description{
+Calculate the degrees of freedom for generalized additive models (GAMs) using
+a selection method based on AIC, AICc, or BIC criteria.
+
 The `dfgam` function calculates the degrees of freedom for specified non-linear
 predictors in a GAM model. The user can choose between AIC (Akaike Information
 Criterion), AICc (AIC corrected for small sample sizes), or BIC (Bayesian
 Information Criterion) as the selection criteria. This function is useful for
 determining the appropriate degrees of freedom for smoothing terms in GAMs.
 }
-\details{
-Calculate the degrees of freedom for generalized additive models (GAMs) using
-a selection method based on AIC, AICc, or BIC criteria.
-
-
-The `dfgam` function calculates the degrees of freedom for specified non-linear
-predictors in a GAM model. It fits multiple GAMs with different degrees of freedom
-and selects the best model based on the chosen selection method (AIC, AICc, or BIC).
-}
 \examples{
 \dontrun{
 # Load necessary libraries
-library(mgcv)
+library(mlbench)
 
-# Simulate data
-set.seed(123)
-data1 <- data.frame(
-  x = rnorm(100),
-  y = rnorm(100)
-)
+# Load dataset
+data(PimaIndiansDiabetes2)
+
+# Fit a GAM model
+fit <- gam(diabetes ~ s(age) + s(mass) + s(pedigree) + pressure + glucose, data = PimaIndiansDiabetes2, family = binomial)
 
 # Calculate degrees of freedom using AIC
-result <- dfgam(response = y ~ x, nl.predictors = "x", data = data1)
+df_result <- dfgam(response = "diabetes", nl.predictors = c("age", "mass", "pedigree"), smoother = "s", method = "AIC", data = PimaIndiansDiabetes2)
 }
 
 }

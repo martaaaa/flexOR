@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot.OR.R
 \name{plot.OR}
 \alias{plot.OR}
-\title{Plot Smooth Odds Ratios}
+\title{Plot.OR: Plot Smooth Odds Ratios}
 \usage{
 \method{plot}{OR}(
   x,
@@ -13,6 +13,7 @@
   round.x = NULL,
   ref.label = NULL,
   col,
+  col.area,
   main,
   xlab,
   ylab,
@@ -66,32 +67,26 @@
 This function doesn't return a value. It is used for generating a plot.
 }
 \description{
-This function plots smooth odds ratios along with confidence intervals for a specified predictor.
-}
-\details{
-Plot Smooth Odds Ratios
-
 Plots smooth odds ratios along with confidence intervals for a specified predictor.
+
+This function plots smooth odds ratios along with confidence intervals for a specified predictor.
 }
 \examples{
 \dontrun{
 # Load necessary libraries
-library(smoothOR)
-library(mgcv)
+library(mlbench)
 
-# Simulate data
-set.seed(123)
-data1 <- data.frame(
-  covariate1 = rnorm(100),
-  covariate2 = rnorm(100),
-  variable = rbinom(100, 1, 0.3)
-)
+# Load dataset
+data(PimaIndiansDiabetes2)
 
-# Fit a smooth odds ratio model
-mod1 <- flexOR(data=data1, response="diabetes", formula=~age+mass)
+# Fit a GAM model
+fit <- gam(diabetes ~ s(age) + s(mass) + s(pedigree) + pressure + glucose, data = PimaIndiansDiabetes2, family = binomial)
+
+# Calculate smooth odds ratios using flexOR
+mod1 <- flexOR(data = PimaIndiansDiabetes2, response = "diabetes", gamfit = fit)
 
 # Plot the smooth odds ratios
-plot.OR(mod1, predictor = "covariate1")
+plot.OR(mod1, predictor = "age")
 }
 
 }

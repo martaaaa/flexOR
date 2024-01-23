@@ -2,7 +2,7 @@
 % Please edit documentation in R/AICc.R
 \name{AICc}
 \alias{AICc}
-\title{AICc Calculation for GAM Models}
+\title{AICc: Calculation for GAM Models}
 \usage{
 AICc(object)
 }
@@ -24,20 +24,16 @@ that penalizes the number of parameters in the model to avoid overfitting.
 \examples{
 \dontrun{
 # Load necessary libraries
-library(mgcv)
+library(mlbench)
 
-# Simulate data
-set.seed(123)
-data1 <- data.frame(
-  x = rnorm(100),
-  y = rnorm(100)
-)
+# Load dataset
+data(PimaIndiansDiabetes2)
 
 # Fit a GAM model
-mod <- gam(y ~ s(x), data = data1)
+fit <- gam(diabetes ~ s(age) + s(mass) + s(pedigree) + pressure + glucose, data = PimaIndiansDiabetes2, family = binomial)
 
 # Calculate AICc
-AICc_value <- AICc(mod)
+AICc_value <- AICc(fit)
 }
 }
 \seealso{

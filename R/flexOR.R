@@ -1,5 +1,5 @@
 #' @title flexOR: Flexible Odds Ratio Computation for GAM Models
-#'
+#' @description
 #' Calculate odds ratios (ORs) for specified
 #' predictors in generalized additive models (GAMs).
 #'

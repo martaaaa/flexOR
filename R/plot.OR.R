@@ -1,5 +1,5 @@
 #' @title Plot.OR: Plot Smooth Odds Ratios
-#'
+#' @description
 #' Plots smooth odds ratios along with confidence intervals for a specified predictor.
 #'
 #' @aliases plot.OR
@@ -50,12 +50,11 @@
 #' @import graphics
 #' @importFrom gam gam
 #' @export
-
 plot.OR <- function(
     x, predictor, prob=NULL, pred.value=NULL, conf.level=0.95, round.x=NULL,
-    ref.label=NULL, col, main, xlab, ylab, lty, xlim, ylim, xx, ylog=TRUE,
-    log=ifelse(ylog, "", "y"), ...
-) {
+    ref.label=NULL, col, col.area, main, xlab, ylab, lty, xlim, ylim, xx, ylog=TRUE,
+    log=ifelse(ylog, "", "y"), ...) 
+{
   object <- x;
   if ( !inherits(object, "OR") ) {stop("Object must be of class OR");}
   mydata <- object$dataset;
@@ -72,9 +71,12 @@ plot.OR <- function(
     }
   }
   if ( missing(predictor) ) {stop("Missing predictor");}
-  if ( missing(col) ) {col <- c("black", "black", "grey85");}
+  if ( missing(col) & length(conf.level) == 1) {col <- c(1,1,1);}
+  if ( missing(col) & length(conf.level) == 2) {col <- c(1,1,1,1,1);}
+  if ( missing(col.area) ) {col.area <- c(rgb(0.9, 0.9, 0.9, 0.5), rgb(0.7, 0.7, 0.7, 0.5));}
   if ( missing(ylab) ) {ylab <- if (ylog) "Ln OR(Z,Zref)" else "OR(Z,Zref)";}
-  if ( missing(lty) ) {lty <- c(1, 3);}
+  if ( missing(lty) & length(conf.level) == 1 ) {lty <- c(1, 2, 2);}
+  if ( missing(lty) & length(conf.level) == 2 ) {lty <- c(1, 2, 2, 3, 3);}
   if (class(fit$x)[1] == "list") fit <- update(fit, . ~ ., x = T)
   if (length(conf.level) > 2) {stop("The length of 'conf.level' must be between 1 and 2");}
   if (length(conf.level) > 1) conf.level <- sort(conf.level)
@@ -212,76 +214,99 @@ plot.OR <- function(
   #    x=a[jj,k], y=tmat[jj,], type="l", lty=c(1, 5, 5, 2), col=c(1, 2, 2, 1),
   #    xlab=xlab, ylab=ylab, xlim=xlim, ylim=ylim, log=log, xaxt="n", main=main, ...
   #  );
-  matplot(
-    x=a[jj,k], y=tmat[jj,], type="l", lty=c(1, 5, 5, 5, 5, 5), col=c(1, 1, 1, 1, 1, 1),
-    xlab=xlab, ylab=ylab, xlim=xlim, ylim=ylim, log=log, xaxt="n", main=main, ...
-  );
-  xxx <- round( seq(min(a[,k]), max(a[,k]),len=5) );
-  if ( missing(xx) ) {
-    xx <- c( min(a[,k]), round(xref,1), xxx[2], xxx[3], xxx[4], max(a[,k]) );
+  
+  if (length(conf.level) > 1){
+    
+    tmat2 <- tmat
+    tmat2[,2:3] <- tmat[,4:5]
+    tmat2[,4:5] <- tmat[,2:3]
+    
+    #plot
+    matplot(
+      x = a[jj,k],
+      y = tmat[jj, ],
+      type = "n",  # 'n' to not plot lines
+      xaxt = "n",
+      xlim = xlim, #a
+      ylim = ylim, #a
+      log = log, #a
+      main = main, #a
+      lty = lty, #a
+      xlab = xlab,
+      ylab = ylab
+    )
+    
+    #shaded areas
+    polygon(
+      c(a[jj,k], rev(a[jj,k])),
+      c(tmat[jj, 4], rev(tmat[jj, 5])),
+      col = col.area[1],  
+      border = NA
+    )
+    
+    polygon(
+      c(a[jj,k], rev(a[jj,k])),
+      c(tmat[jj, 2], rev(tmat[jj, 3])),
+      col = col.area[2],  
+      border = NA
+    )
+    
+    # Add lines to the plot 
+    matlines(
+      x = a[jj,k],
+      y = tmat[jj, ],
+      lty = lty,
+      col = 1,
+      type = "l"
+    )
+    
+    # Definition of the x axes
+    xxx <- round( seq(min(a[,k]), max(a[,k]),len=5) );
+    if ( missing(xx) ) {
+      xx <- c( min(a[,k]), round(xref,1), xxx[2], xxx[3], xxx[4], max(a[,k]) );
+    }
+    axis(1, xx, ...)
   }
-  axis(1, xx, ...);
-  m <- length(jj);
-  x <- rep(NA, 2*m+1);
-  y <- rep(NA, 2*m+1);
-  for (l in 1:m) {
-    x[l] <- a[jj,k][l];
-    x[m+l] <- a[jj,k][m+1-l];
-    y[l] <- tmat[jj,2][l];
-    y[m+l] <- tmat[jj,1][m+1-l];
+  
+  if (length(conf.level) == 1){
+    matplot(
+      x = a[jj,k],
+      y = tmat[jj, ],
+      type = "n",  # 'n' to not plot lines
+      xaxt = "n",
+      xlim = xlim, #a
+      ylim = ylim, #a
+      log = log, #a
+      main = main, #a
+      lty = lty, #a
+      xlab = xlab,
+      ylab = ylab
+    )
+    
+    polygon(
+      c(a[jj,k], rev(a[jj,k])),
+      c(tmat[jj, 2], rev(tmat[jj, 3])),
+      col = col.area[1],  
+      border = NA
+    )
+    
+    # Add lines
+    matlines(
+      x = a[jj,k],
+      y = tmat[jj, ],
+      lty = lty,  
+      col = col   
+    )
+    # Definition of the x axes
+    xxx <- round( seq(min(a[,k]), max(a[,k]),len=5) );
+    if ( missing(xx) ) {
+      xx <- c( min(a[,k]), round(xref,1), xxx[2], xxx[3], xxx[4], max(a[,k]) );
+    }
+    axis(1, xx, ...)
   }
-  x[m+1] <- x[m];
-  x[2*m+1] <- x[1];
-  y[2*m+1] <- tmat[jj,2][1];
-  polygon(c(x), c(y), col=col[3], ...);
-  y <- rep(NA, 2*m+1);
-  for (l in 1:m) {
-    x[l] <- a[jj,k][l];
-    x[m+l] <- a[jj,k][m+1-l];
-    y[l] <- tmat[jj,3][l];
-    y[m+l] <- tmat[jj,1][m+1-l];
-  }
-  x[m+1] <- x[m];
-  x[2*m+1] <- x[1];
-  y[2*m+1] <- tmat[jj,2][1];
-  polygon(c(x), c(y), col=col[3], ...);
-  y <- rep(NA, 2*m+1);
-  for (l in 1:m) {
-    x[l] <- a[jj,k][l];
-    x[m+l] <- a[jj,k][m+1-l];
-    y[l] <- tmat[jj,3][l];
-    y[m+l] <- tmat[jj,2][m+1-l];
-  }
-  x[m+1] <- x[m];
-  x[2*m+1] <- x[1];
-  y[2*m+1] <- tmat[jj,2][1];
-  polygon(c(x), c(y), col=col[3], border="white", ...);
-  y <- rep(NA, 2*m+1);
-  for (l in 1:m) {
-    x[l] <- a[jj,k][l];
-    x[m+l] <- a[jj,k][m+1-l];
-    y[l] <- tmat[jj,3][l];
-    y[m+l] <- tmat[jj,2][m+1-l];
-  }
-  x[m+1] <- x[m];
-  x[2*m+1] <- x[1];
-  y[2*m+1] <- tmat[jj,2][1];
-  polygon(c(x), c(y), col=col[3], border=col[2], lty=lty[2], lwd=1.5, ...);
-  x <- rep(NA, 2*m+1);
-  y <- rep(NA, 2*m+1);
-  for (l in 1:m) {
-    x[l] <- a[jj,k][l];
-    x[m+l] <- a[jj,k][m+1-l];
-    y[l] <- tmat[jj,1][l];
-    y[m+l] <- tmat[jj,1][m+1-l];
-  }
-  x[m+1] <- x[m];
-  x[2*m+1] <- x[1];
-  y[2*m+1] <- tmat[jj,1][1];
-  polygon(c(x), c(y), col=col[3], border=col[1], lty=lty[1], ...);
-  abline(0, 0, lty=2);
-  abline(v=min(a[,k]), col="white");
-  abline(v=max(a[,k]), col="white");
+  
+  y <- c(0,0)  
+  
   if ( missing(xlim) ) {
     v1 <- min(a[,k])+( max(a[,k])-min(a[,k]) )/10;
     v2 <- min(a[,k])+9*( max(a[,k])-min(a[,k]) )/10;
@@ -328,4 +353,10 @@ plot.OR <- function(
       text(xref, y[1], paste( n.predictor, "=", round(xref, round.x) ), adj=c(1, -0.7), ...);
     }
   }
+  tmat2 <- tmat
+  if (length(conf.level) > 1){
+    tmat2 <- tmat
+    tmat2[,2:3] <- tmat[,4:5]
+    tmat2[,4:5] <- tmat[,2:3]}
+  return(invisible(list(estimates=tmat2, xref=xref)))
 } # plot.OR

@@ -2,7 +2,7 @@
 % Please edit documentation in R/predict.OR.R
 \name{predict.OR}
 \alias{predict.OR}
-\title{Predict Method for OR Objects}
+\title{predict.OR : Predict Method for OR Objects}
 \usage{
 \method{predict}{OR}(
   object,
@@ -46,20 +46,20 @@ This function predicts values and prediction intervals using a fitted OR model.
 }
 \examples{
 \dontrun{
-# Example of how to use predict.OR
-library(gam)
+# Load necessary libraries
 library(mlbench)
+
+# Load the Pima Indians Diabetes dataset
 data(PimaIndiansDiabetes2)
-str(PimaIndiansDiabetes2)
 
-fit <- gam(diabetes ~ s(age), data=PimaIndiansDiabetes2, family=binomial(), x=TRUE)
-summary(fit)
-plot(fit, se=T, ask=TRUE)
+# Fit a GAM model
+fit <- gam(diabetes ~ s(age) + s(mass) + s(pedigree) + pressure + glucose, data = PimaIndiansDiabetes2, family = binomial)
 
+# Predict the probabilities using predict.OR
 pdval <- c(21, 25, 29, 30, 31, 34, 35, 38, 40, 41, 41, 45, 50, 60, 65, 80)
 predict.OR(fit, predictor="age", pred.value=30, conf.level=0.95, prediction.values=pdval)
+#' 
 }
-
 
 }
 \keyword{OR,}

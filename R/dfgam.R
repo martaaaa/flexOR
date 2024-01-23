@@ -1,5 +1,5 @@
 #' @title dfgam: Degrees of Freedom Selection for GAM Models
-#'
+#' @description
 #' Calculate the degrees of freedom for generalized additive models (GAMs) using
 #' a selection method based on AIC, AICc, or BIC criteria.
 #'
@@ -71,7 +71,7 @@ dfgam <- function(response, nl.predictors, other.predictors=NULL, smoother="s", 
   # df for nonlinear predictors 
   if(is.null(other.predictors)){
     covar <- paste("s(", nl.predictors, ")", collapse="+")
-    fmla <- as.formula( paste( names(data)[p1], "~", covar) );
+    fmla <- as.formula( paste( names(data)[p1], "~", covar ) );
   }
   if(!is.null(other.predictors)){
     nop <- length(other.predictors);
@@ -82,7 +82,7 @@ dfgam <- function(response, nl.predictors, other.predictors=NULL, smoother="s", 
     covar1 <- paste("s(", nl.predictors, ")", collapse="+");
     covar2 <- paste(other.predictors, collapse="+");
     covar <- paste (c(covar1, covar2), collapse="+");
-    fmla <- as.formula( paste( names(data)[p1]," ~ ", covar) ) ;
+    fmla <- as.formula( paste( names(data)[p1]," ~ ", covar, collapse = "+") ) ;
   }
   
   if (method == "REML")  {fit <- mgcv::gam(fmla, data=data, family=binomial, method = "REML");}

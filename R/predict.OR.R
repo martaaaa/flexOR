@@ -38,20 +38,20 @@
 #'
 #' @keywords prediction, odds ratio, confidence interval, OR, predict method
 #' @export
-
-predict.OR <- function(object, predictor, prob=NULL, pred.value=NULL, conf.level=0.95, prediction.values=NULL, round.x=NULL, ref.label=NULL, ...) {
+#' 
+predict.OR <- function(object, predictor, prob=NULL, ref.value=NULL, conf.level=0.95, prediction.values=NULL, round.x=NULL, ref.label=NULL, ...) {
   if ( missing(object) ) {stop("Missing object");}
   if ( missing(predictor) ) {stop("Missing predictor");}
   if ( missing(round.x) ) {round.x <- 5;}
-  if ( !missing(pred.value) ) {prob <- 0.5; }
-  if ( missing(prob) & missing(pred.value) ) {prob <- 0;}
-
+  if ( !missing(ref.value) ) {prob <- 0.5; }
+  if ( missing(prob) & missing(ref.value) ) {prob <- 0;}
+  
   model <- object
   mydata <- model$data                          #retirar obs com NA restringindo a bd as variaveis em object
   p.vars <- match(all.vars(model$formula), names(mydata))
   mydata <- mydata[,p.vars]
   mydata <- na.omit(mydata)
-
+  
   fit <- model
   if (class(fit$x)[1] == "list") fit <- update(fit, . ~ ., x = T)
   ctype <- "FALSE";
@@ -63,12 +63,21 @@ predict.OR <- function(object, predictor, prob=NULL, pred.value=NULL, conf.level
   if (k[1] == 9999) {stop("predictor must be in data");}
   k <- k[1];
   if ( missing(prediction.values) ) {prediction.values <- c( min(mydata[,k]), quantile( mydata[,k], c(0.05, 0.25, 0.5, 0.75, 0.95) ), max(mydata[,k]) );}
-  prediction.values <- sort(unique(c(prediction.values, pred.value)))
+  prediction.values <- sort(unique(c(prediction.values, ref.value)))
   # print(prediction.values)
   if ( min(prediction.values) < min(mydata[,k]) | max(prediction.values) > max(mydata[,k]) ) {stop("prediction.values must be between minimum and maximum of the predictor");}
   a <- mydata; # a is our dataset
   n.predictor <- names(a)[k];
   n <- dim(a)[1];
+  
+  if ( !missing(ref.value) ) {
+    pp <- seq(0, 1, len=1000);
+    app <- quantile(a[,k], pp);
+    qq <- which(app <= ref.value);
+    qq1 <- max(qq);
+    prob <- qq1/1000;
+  }
+  
   if (prob == 0) {
     eta.no.ref <- predict(fit, type="terms");
     if ( inherits(eta.no.ref, "numeric") ) {kp <- 1; eta.no.ref <- cbind(eta.no.ref, eta.no.ref);}
@@ -98,12 +107,12 @@ predict.OR <- function(object, predictor, prob=NULL, pred.value=NULL, conf.level
     if ( inherits(eta.no.ref, "numeric") ) {kp <- 1; eta.no.ref <- cbind(eta.no.ref, eta.no.ref);}
     else {kp <- grep( predictor, colnames(eta.no.ref) );}
     ord <- order(a[,k]);
-    if ( !missing(pred.value) ) {
-      pp <- seq(0, 1, len=200);
+    if ( !missing(ref.value) ) {
+      pp <- seq(0, 1, len=2000);
       app <- quantile(a[,k], pp);
-      qq <- which(app <= pred.value);
+      qq <- which(app <= ref.value);
       qq1 <- max(qq);
-      prob <- qq1/200;
+      prob <- qq1/2000;
     }
     ind.prob <- trunc(prob*n);
     xref <- a[,k][ord[ind.prob]];
@@ -170,6 +179,5 @@ predict.OR <- function(object, predictor, prob=NULL, pred.value=NULL, conf.level
   else {mat.name <- c( ref.label, "LnOR", paste("lower .", conf.level*100, sep=""), paste("upper .", conf.level*100, sep="") );}
   colnames(matriz) <- mat.name;
   rownames(matriz) <- rep( "", length(prediction.values) );
-  #return(matriz);
-  return(list(matriz = matriz, tmat = tmat))
+  return(matriz);
 } # predict.OR
