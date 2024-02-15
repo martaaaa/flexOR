@@ -51,6 +51,10 @@
 
 flexOR <- function(data, response, formula, gamfit_var) {
   modelfit <- "TRUE"
+  if (missing(data)) {
+    stop("The argument data is missing")
+  }
+  
   mydata2 <- deparse(substitute(data))
   if (missing(gamfit_var)) {
     modelfit <- "FALSE"
@@ -76,10 +80,6 @@ flexOR <- function(data, response, formula, gamfit_var) {
     }
     
     fit <- gamfit_var
-  }
-  
-  if (missing(data)) {
-    stop("The argument data is missing")
   }
   
   if (missing(response) & modelfit == "FALSE") {
