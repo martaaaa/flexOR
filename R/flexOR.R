@@ -15,8 +15,8 @@
 #' flexOR(data, response = NULL, formula = NULL, gamfit)
 #'
 #' @param data A data frame containing the variables.
-#' @param response_var The response variable as a character string.
-#' @param formula_var A formula specifying the model if not using a pre-fitted GAM.
+#' @param response The response variable as a character string.
+#' @param formula A formula specifying the model if not using a pre-fitted GAM.
 #' @param gamfit_var A pre-fitted GAM model (class 'Gam').
 #'
 #' @details
@@ -49,7 +49,7 @@
 #' @keywords GAM odds-ratio binary-data confidence-interval
 #' @export
 
-flexOR <- function(data, response_var = NULL, formula_var = NULL, gamfit_var) {
+flexOR <- function(data, response, formula, gamfit_var) {
   modelfit <- "TRUE"
   mydata2 <- deparse(substitute(data))
   if (missing(gamfit_var)) {
@@ -82,26 +82,26 @@ flexOR <- function(data, response_var = NULL, formula_var = NULL, gamfit_var) {
     stop("The argument data is missing")
   }
   
-  if (missing(response_var) & modelfit == "FALSE") {
-    stop("The argument response_var is missing")
+  if (missing(response) & modelfit == "FALSE") {
+    stop("The argument response is missing")
   }
   
-  if (missing(formula_var) & modelfit == "FALSE") {
-    stop("The argument formula_var is missing")
+  if (missing(formula) & modelfit == "FALSE") {
+    stop("The argument formula is missing")
   }
   
   mydata <- data
   
   if (modelfit == "FALSE") {
-    p0 <- match(names(data), response_var, nomatch = 0)
+    p0 <- match(names(data), response, nomatch = 0)
     p1 <- which(p0 == 1)
     ny <- data[, p1]
     
-    if (!missing(response_var)) {
-      response_var <- ny
+    if (!missing(response)) {
+      response <- ny
     }
     
-    fmla <- attr(terms(formula_var), "term.labels")
+    fmla <- attr(terms(formula), "term.labels")
     ncov <- length(fmla)
     colvar <- rep(0, ncov)
     
@@ -118,7 +118,7 @@ flexOR <- function(data, response_var = NULL, formula_var = NULL, gamfit_var) {
     }
     
     if (any(colvar == 0)) {
-      stop("'formula_var' must contain the right variables")
+      stop("'formula' must contain the right variables")
     }
     
     covar <- as.formula(paste(" ny ~ ", paste(fmla, collapse = "+")))
@@ -141,7 +141,7 @@ flexOR <- function(data, response_var = NULL, formula_var = NULL, gamfit_var) {
     a1 <- p1
     
     for (k in 1:dim(mydata)[2]) {
-      if (any(grep(names(mydata)[k], formula_var))) {
+      if (any(grep(names(mydata)[k], formula))) {
         a1 <- c(a1, k)
       }
     }
