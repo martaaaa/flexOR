@@ -1,4 +1,64 @@
 # flexOR
-The OR curve for a continuous predictor $Z$ in an additive logistic regression model can be written as $OR(Z,z_{ref})=exp(f(z)-f(z_{ref}))$ where $z_{ref}$ is a specific value of the predictor taken as the reference. After taking logarithms for simplicity, the asymptotic variance of $Ln\widehat{OR}(Z,z_{ref})$ can be expressed in terms of the covariance matrix of the spline estimate. Finally, assuming normality, $(1 - \alpha)100$\% pointwise confidence limits can be constructed around the $OR(Z,z_{ref})$ curve.
+Flexible Estimation of Odds Ratio Curves: Introducing the flexOR Package
 
-One disadvantage of using splines for modelling a continuous covariate’s effect is the difficulty in choosing the number and location of the knots between which the smooth line is drawn. An arbitrary choice of number of knots and/or arbitrary knot location can mask important features in the data. While too many knots can lead to oversmoothing, too few can lead to undersmoothing. The package flexor provides an R function that provides the optimal number of degrees of freedom in the multivariable additive logistic model. The optimal degree of smoothing is obtained by minimizing Akaike’s Information Criterion (AIC), a corrected version of this (AICc) or based on the Bayesian Information Criterion (BIC). The AIC and BIC scores have similar forms, differing only in the penalty coefficient. In both scores, the first term rewards goodness of fit whereas the second is a penalty that is an increasing function of the number of estimated parameters (df). The penalties in the expressions of the AIC and BIC ($2 × df$ and $\log(n) \times df$, resp.) discourage overfitting.
+## Description
+Explore the relationship between continuous predictors and binary outcomes with flexOR, an R package designed for robust nonparametric estimation of odds ratio curves. 
+Overcome limitations of traditional regression methods by leveraging smoothing techniques, particularly spline-based methods, providing adaptability to complex datasets. 
+The package includes options for automatic selection of degrees of freedom in multivariable models, enhancing adaptability to diverse datasets and intuitive visualization functions facilitate the interpretation and presentation of estimated odds ratio curves.
+
+## Installation
+If you want to use the release version of the **flexOR** package, you can install the package from CRAN as follows:
+```r
+install.packages(pkgs="flexOR");
+```
+If you want to use the development version of the **flexOR** package, you can install the package from GitHub via the [**remotes**](https://remotes.r-lib.org) package:
+```r
+remotes::install_github(
+  repo="martaaaa/flexOR",
+  build=TRUE,
+  build_manual=TRUE
+);
+```
+
+## Authors
+Marta Azevedo <marta.vasconcelos4@gmail.com> and Luís Meira-Machado <lmachado@math.uminho.pt> \
+Maintainer: Marta Azevedo <marta.vasconcelos4@gmail.com>
+
+## Funding
+This research was financed by FCT - Fundação para a Ciência e a Tecnologia, under Projects UIDB/00013/2020, UIDP/00013/2020, and EXPL/MAT-STA/0956/2021.
+## References
+
+Hosmer, D. W.; Lemeshow, S.; Sturdivant, R. X. Applied Logistic Regression, 3rd ed.;
+Wiley, 2013.
+
+Royston, P.; Altman, D.G.; Sauerbrei, W. Dichotomizing continuous predictors in multiple
+regression: A bad idea. Statistics in Medicine 2006, 25, 127–141.
+
+Hastie, T. J. and Tibshirani, R. J. Generalized Additive Models; Chapman & Hall/CRC:
+New York, USA, 1990.
+
+Wood, S. Generalized Additive Models: An Introduction with R; Chapman & Hall/CRC:
+London, UK, 2017.
+
+Akaike, H. A new look at the statistical model identification. IEEE Transactions on
+Automatic Control 1974, 19, 716–723.
+
+Hurvich, C. M.; Simonoff, J. S.; Tsai, Ch. L. Smoothing parameter selection in nonpara-
+metric regression using an improved akaike information criterion. Journal of the Royal
+Statistical Society, Series B 1998, 60, 271–293.
+
+Schwarz, G. E. Estimating the dimension of a model. Annals of Statistics 1978, 6(2),
+461–464.
+
+Cadarso-Suárez, C.; Meira-Machado, L.; Kneib, T.; Gude, F. Flexible hazard ratio curves
+for continuous predictors in multi-state models. Statistical Modelling 2010, 10(3),
+291–314.
+
+Meira-Machado, L.; Cadarso-Su ́arez, C.; Ara ́ujo, A.; Gude, F. smoothHR: An R Pac-
+kage for Pointwise Nonparametric Estimation of Hazard Ratio Curves of Continuous
+Predictors. Comput. Math. Methods Medicine 2013.
+de Boor, C. A Practical Guide to Splines (Rev. Edn); Springer, New York, 2001.
+
+Wood, S.; Pya, N.; , A.; S ̈afken, B. Smoothing parameter and model selection for gene-
+ral smooth models (with discussion). Journal of the American Statistical Association
+2016, 111, 1548-1575
