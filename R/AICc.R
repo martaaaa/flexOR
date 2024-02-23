@@ -33,28 +33,17 @@
 #'
 #' @keywords GAM AICc model-selection
 #' @export
-
-AICc <- function(object) {
-  if (!(inherits(object, "Gam") || inherits(object, "gam"))) {
+AICc <- function(object){
+  if(class(object)[1] != "Gam" & class(object)[1] != "gam")
     stop("'object' must be of class 'Gam' or 'gam'")
-  }
-  
-  if (!is.null(findMethod("logLik", class(object)))) {
-    ll <- logLik(object)
-    d <- attributes(ll)$df
-    
-    if (inherits(object, "Gam")) {
-      n <- attributes(ll)$nobs
-    } else if (inherits(object, "gam")) {
-      n <- object$df.null + 1
-    }
-    
-    aic <- -2 * logLik(ll)[1] + 2 * attributes(ll)$df
-    caic <- aic + 2 * d * (d + 1) / (n - d - 1)
-    caic[d + 1 >= n] <- Inf
-    attributes(caic)[c('df', 'nobs', 'class')] <- NULL
-    return(caic)
-  } else {
-    stop("No applicable method for 'logLik' applied to an object of class ", class(object))
-  }
-}
+  ll <- logLik(object)
+  d <- attributes(ll)$df
+  if(class(object)[1]=="Gam") n <- attributes(ll)$nobs
+  if(class(object)[1]=="gam") n <- object$df.null + 1
+  aic <- -2*logLik(ll)[1]+2*attributes(ll)$df
+  caic <- aic + 2*d*(d+1)/(n-d-1)
+  caic[d+1 >= n] <- Inf
+  attributes(caic)[c('df','nobs','class')] <- NULL
+  caic
+} # AICc
+
