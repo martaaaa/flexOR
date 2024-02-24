@@ -6,7 +6,7 @@
 #' @param object An object of class "OR."
 #' @param predictor The predictor variable for which you want to make predictions.
 #' @param prob Probability value for prediction. Use 0 for point prediction, 0.5 for median, or a custom value between 0 and 1.
-#' @param pred.value Optional custom prediction value (use with prob=NULL).
+#' @param ref.value Optional custom prediction value (use with prob=NULL).
 #' @param conf.level Confidence level for prediction intervals (default is 0.95).
 #' @param prediction.values Vector of specific prediction values to calculate.
 #' @param round.x Number of decimal places to round the prediction values (default is 5).
@@ -46,9 +46,53 @@ predict.OR <- function(object, predictor, prob=NULL, ref.value=NULL, conf.level=
   if ( !missing(ref.value) ) {prob <- 0.5; }
   if ( missing(prob) & missing(ref.value) ) {prob <- 0;}
   
-  model <- object
-  mydata <- model$data                          #retirar obs com NA restringindo a bd as variaveis em object
-  p.vars <- match(all.vars(model$formula), names(mydata))
+  if (!inherits(object, "OR")) {stop("Object must be of class OR")}
+  
+  #
+  
+  formula <- object$formula
+  mydata <- object$dataset
+  response <- object$response
+  
+  p0 <- match(names(mydata), response, nomatch = 0)
+  p1 <- which(p0 == 1)
+  ny <- mydata[, p1]
+  
+  if (!missing(response)) {
+    response <- ny
+  }
+  
+  fmla <- attr(terms(formula), "term.labels")
+  ncov <- length(fmla)
+  colvar <- rep(0, ncov)
+  
+  for (k in 1:ncov) {
+    if (fmla[k] %in% names(mydata)) {
+      colvar[k] <- which(names(mydata) == fmla[k])
+    } else {
+      for (j in 1:ncol(mydata)) {
+        if (any(grep(names(mydata)[j], fmla[k]))) {
+          colvar[k] <- j
+        }
+      }
+    }
+  }
+  
+  if (any(colvar == 0)) {
+    stop("'formula' must contain the right variables")
+  }
+  
+  covar <- as.formula(paste(" ny ~ ", paste(fmla, collapse = "+")))
+  fit <- gam::gam(covar, data = mydata, x = TRUE, family = binomial)
+  
+  
+  #
+  
+  model0 <- object
+  model <- fit
+  #mydata <- model$data                          #remove obs with NA 
+  p.vars <- match(all.vars(model0$formula), names(mydata))
+  p.vars <- c(p.vars, p1)
   mydata <- mydata[,p.vars]
   mydata <- na.omit(mydata)
   

@@ -71,7 +71,9 @@ dfgam <- function(response, nl.predictors, other.predictors=NULL, smoother="s", 
   # df for nonlinear predictors 
   if(is.null(other.predictors)){
     covar <- paste("s(", nl.predictors, ")", collapse="+")
+    #fmla <- as.formula( paste( names(data)[p1], "~", paste(covar, collapse = "+") ) );
     fmla <- as.formula( paste( names(data)[p1], "~", covar ) );
+    
   }
   if(!is.null(other.predictors)){
     nop <- length(other.predictors);
