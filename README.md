@@ -49,4 +49,4 @@ Meira-Machado, L. and Cadarso-Suárez, C. and Gude, F. and Araújo, A. (2013). s
 
 de Boor, C. (2001). *A Practical Guide to Splines: Revised Edition*, Springer, New York, NY.
 
-Wood, S. N. and Pya, N. and S ̈afken, B. (2016). Smoothing Parameter and Model Selection for General Smooth Models. *Journal of the American Statistical Association*, **111**(516), 1548-1563. [doi:10.1080/01621459.2016.1180986](https://doi.org/10.1080/01621459.2016.1180986)
+Wood, S. N. and Pya, N. and Säfken, B. (2016). Smoothing Parameter and Model Selection for General Smooth Models. *Journal of the American Statistical Association*, **111**(516), 1548-1563. [doi:10.1080/01621459.2016.1180986](https://doi.org/10.1080/01621459.2016.1180986)
