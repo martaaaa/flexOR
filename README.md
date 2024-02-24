@@ -22,7 +22,7 @@ remotes::install_github(
 
 ## Authors
 Marta Azevedo, Luís Meira-Machado <lmachado@math.uminho.pt> \
-and Artur Araujo <artur.stat@gmail.com>
+and Artur Araujo <artur.stat@gmail.com> \
 Maintainer: Marta Azevedo <marta.vasconcelos4@gmail.com>
 
 ## Funding
