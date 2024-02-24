@@ -132,11 +132,11 @@ plot.OR <- function(
     else {kp <- grep( predictor, colnames(eta.no.ref) );}
     ord <- order(a[,k]);
     if ( !missing(ref.value) ) {
-      pp <- seq(0, 1, len=1000);
+      pp <- seq(0, 1, len=10000);
       app <- quantile(a[,k], pp);
       qq <- which(app <= ref.value);
       qq1 <- max(qq);
-      prob <- qq1/1000;
+      prob <- qq1/10000;
     }
     ind.prob <- trunc(prob*n);
     xref <- a[,k][ord[ind.prob]];

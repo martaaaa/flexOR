@@ -1,9 +1,11 @@
 #' @title floor_to: Rounds a number down
 #' @description
-#' This function rounds a number down to the specified multiple.
-#' 
-#' @param x The number to be rounded.
-#' @param to The multiple to which the number should be rounded down. Default is 1.
+#' The floor_to function takes a numeric value or vector (x) and rounds it 
+#' down to the nearest multiple of a specified base (to).  
+#' If the to argument is not provided, it defaults to rounding down to the nearest integer. 
+#' The result is returned as a numeric value or vector of the same length as the input.
+#' @param x numeric value or vector that you want to round down or floor.
+#' @param to the base to which you want to round down the input value(s). The default value is set to 1, meaning the function will round down to the nearest integer.
 #' 
 #' @return The number rounded down to the specified multiple.
 #' 
@@ -14,7 +16,7 @@
 #' @importFrom base floor
 #' @export
 #'
-floor_to <- function(x, to = 1) {
+floor_to <- function(x, to=1) {
   floored <- floor(x / to) * to
   return(floored)
-} #floor_to
+}#floor_to
