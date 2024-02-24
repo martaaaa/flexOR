@@ -21,44 +21,32 @@ remotes::install_github(
 ```
 
 ## Authors
-Marta Azevedo <marta.vasconcelos4@gmail.com> and Luís Meira-Machado <lmachado@math.uminho.pt> \
+Marta Azevedo, Luís Meira-Machado <lmachado@math.uminho.pt> \
+and Artur Araujo <artur.stat@gmail.com>
 Maintainer: Marta Azevedo <marta.vasconcelos4@gmail.com>
 
 ## Funding
-This research was financed by FCT - Fundação para a Ciência e a Tecnologia, under Projects UIDB/00013/2020, UIDP/00013/2020, and EXPL/MAT-STA/0956/2021.
+This research was financed by **FCT** -- *Fundação para a Ciência e a Tecnologia*, under Projects UIDB/00013/2020, UIDP/00013/2020, and EXPL/MAT-STA/0956/2021.
+
 ## References
+Hosmer, D. W. and Lemeshow, S. and Sturdivant, R. X. (2013). *Applied Logistic Regression: Third Edition*, John Wiley and Sons Inc., New York, NY.
 
-Hosmer, D. W.; Lemeshow, S.; Sturdivant, R. X. Applied Logistic Regression, 3rd ed.;
-Wiley, 2013.
+Royston, P. and Altman, D. G. and Sauerbrei, W. (2006). Dichotomizing continuous predictors in multiple regression: A bad idea. *Statistics in Medicine*, **25**(1), 127–141. [doi:10.1002/sim.2331](https://doi.org/10.1002/sim.2331)
 
-Royston, P.; Altman, D.G.; Sauerbrei, W. Dichotomizing continuous predictors in multiple
-regression: A bad idea. Statistics in Medicine 2006, 25, 127–141.
+Hastie, T. J. and Tibshirani, R. J. (1990) *Generalized Additive Models*, Chapman & Hall/CRC, New York, NY.
 
-Hastie, T. J. and Tibshirani, R. J. Generalized Additive Models; Chapman & Hall/CRC:
-New York, USA, 1990.
+Wood, S. N. (2017). *Generalized Additive Models: An Introduction with R: Second Edition*, Chapman & Hall/CRC, London, UK.
 
-Wood, S. Generalized Additive Models: An Introduction with R; Chapman & Hall/CRC:
-London, UK, 2017.
+Akaike, H. (1974). A new look at the statistical model identification. *IEEE Transactions on Automatic Control*, **19**(6), 716–723. [doi:10.1109/TAC.1974.1100705](https://doi.org/10.1109/TAC.1974.1100705)
 
-Akaike, H. A new look at the statistical model identification. IEEE Transactions on
-Automatic Control 1974, 19, 716–723.
+Hurvich, C. M. and Simonoff, J. S. and Tsai, C. (1998). Smoothing parameter selection in nonparametric regression using an improved akaike information criterion. *Journal of the Royal Statistical Society Series B: Statistical Methodology*, **60**(2), 271–293. [doi:10.1111/1467-9868.00125](https://doi.org/10.1111/1467-9868.00125)
 
-Hurvich, C. M.; Simonoff, J. S.; Tsai, Ch. L. Smoothing parameter selection in nonpara-
-metric regression using an improved akaike information criterion. Journal of the Royal
-Statistical Society, Series B 1998, 60, 271–293.
+Schwarz, G. (1978). Estimating the dimension of a model. *Annals of Statistics*, **6**(2), 461–464. [doi:10.1214/aos/1176344136](https://doi.org/10.1214/aos/1176344136)
 
-Schwarz, G. E. Estimating the dimension of a model. Annals of Statistics 1978, 6(2),
-461–464.
+Cadarso-Suárez, C. and Meira-Machado, L. and Kneib, T. and Gude, F. (2010). Flexible hazard ratio curves for continuous predictors in multi-state models: an application to breast cancer data. *Statistical Modelling*, **10**(3), 291–314. [doi:10.1177/1471082X0801000303](https://doi.org/10.1177/1471082X0801000303)
 
-Cadarso-Suárez, C.; Meira-Machado, L.; Kneib, T.; Gude, F. Flexible hazard ratio curves
-for continuous predictors in multi-state models. Statistical Modelling 2010, 10(3),
-291–314.
+Meira-Machado, L. and Cadarso-Suárez, C. and Gude, F. and Araújo, A. (2013). smoothHR: An R Package for Pointwise Nonparametric Estimation of Hazard Ratio Curves of Continuous Predictors. *Computational and Mathematical Methods in Medicine*, **2013**, 11 pages. [doi:10.1155/2013/745742](https://doi.org/10.1155/2013/745742)
 
-Meira-Machado, L.; Cadarso-Su ́arez, C.; Ara ́ujo, A.; Gude, F. smoothHR: An R Pac-
-kage for Pointwise Nonparametric Estimation of Hazard Ratio Curves of Continuous
-Predictors. Comput. Math. Methods Medicine 2013.
-de Boor, C. A Practical Guide to Splines (Rev. Edn); Springer, New York, 2001.
+de Boor, C. (2001). *A Practical Guide to Splines: Revised Edition*, Springer, New York, NY.
 
-Wood, S.; Pya, N.; , A.; S ̈afken, B. Smoothing parameter and model selection for gene-
-ral smooth models (with discussion). Journal of the American Statistical Association
-2016, 111, 1548-1575
+Wood, S. N. and Pya, N. and S ̈afken, B. (2016). Smoothing Parameter and Model Selection for General Smooth Models. *Journal of the American Statistical Association*, **111**(516), 1548-1563. [doi:10.1080/01621459.2016.1180986](https://doi.org/10.1080/01621459.2016.1180986)
