@@ -2,38 +2,47 @@ Encoding: UTF-8
 Package: flexOR
 Type: Package
 Version: 1.0.0
-Date: 2024-02-23
+Date: 2024-02-24
 Title: Flexible odds ratio curves
 Authors@R: c(
-    person(
-        given = "Marta",
-        family = "Azevedo",
-        role = c("aut", "cre"),
-        email = "marta.vasconcelos4@gmail.com",
-        comment = c(ORCID = "0009-0003-4412-6991")
-    ),
-	person(
-		given = "Luis",
-		family = "Meira-Machado",
-		role = "aut",
-		email = "lmachado@math.uminho.pt",
-		comment = c(ORCID = "0000-0002-8577-7665")
-	) )
+  person(
+    given = "Marta",
+    family = "Azevedo",
+    role = c("aut", "cre"),
+    email = "marta.vasconcelos4@gmail.com",
+    comment = c(ORCID = "0009-0003-4412-6991")
+  ),
+  person(
+    given = "Luis",
+    family = "Meira-Machado",
+    role = "aut",
+    email = "lmachado@math.uminho.pt",
+    comment = c(ORCID = "0000-0002-8577-7665")
+  ),
+  person(
+    given = "Artur",
+    family = "Araujo",
+    role = "aut",
+    email = "artur.stat@gmail.com",
+    comment = c(ORCID = "0000-0003-1419-4208")
+  ) )
+Author: Marta Azevedo [aut, cre],
+  Luis Meira-Machado [aut],
+  Artur Araujo [aut]
 Maintainer: Marta Azevedo <marta.vasconcelos4@gmail.com>
+Depends: R (>= 3.1.0), survival, splines, gam, mlbench
+Imports: mgcv
+Suggests: testthat (>= 3.0.0)
+Config/testthat/edition: 3
 Description: Provides flexible hazard ratio curves allowing non-linear
   relationships between continuous predictors and survival.
-  To better understand the effects that each continuous covariate has on the outcome, results can
-  be expressed in terms of splines-based odds ratio (OR) curves, taking a specific
-  covariate value as reference.
-Depends: R (>= 2.12.0), survival, splines, gam, mlbench
+  To better understand the effects that each continuous covariate has on the outcome,
+  results can be expressed in terms of splines-based odds ratio (OR) curves,
+  taking a specific covariate value as reference.
 License: GPL-3
 URL: https://github.com/martaaaa/flexOR
 BugReports: https://github.com/martaaaa/flexOR/issues
 LazyLoad: yes
-LazyData: yes
+LazyData: no
 NeedsCompilation: no
-Imports: mgcv
 RoxygenNote: 7.3.1
-Suggests: 
-    testthat (>= 3.0.0)
-Config/testthat/edition: 3
