@@ -50,6 +50,7 @@
 #' 
 dfgam <- function(response, nl.predictors, other.predictors=NULL, smoother="s", method = "AIC", data, step=NULL) {
   #options(warn=-1);
+
   if ( missing(data) ) {stop("The argument data is missing");}
   if ( missing(response) ) {stop("The argument response is missing");}
   if ( missing(nl.predictors) ) {stop("The argument 'nl.predictors' is missing");}
@@ -114,8 +115,7 @@ dfgam <- function(response, nl.predictors, other.predictors=NULL, smoother="s", 
         for(h in 1:lmat){
           ndf <- df
           ndf[k] <- mat[h,1,k]
-          
-          aux1 <- paste("s(", nl.predictors, ",df=",ndf, ")", collapse="+")
+          aux1 <- paste("gam::s(", nl.predictors, ",df=",ndf, ")", collapse="+")
           if (is.null(other.predictors)) {aux2 <- aux1}
           else {aux2 <- paste(c(aux1,covar2), collapse="+")}
           fmla3 <- as.formula( paste( names(data)[p1]," ~ ", aux2, collapse = "+") ) ;
@@ -145,7 +145,7 @@ dfgam <- function(response, nl.predictors, other.predictors=NULL, smoother="s", 
   }
   if(!missing(other.predictors)){
     auxop <- paste(other.predictors, collapse="+")
-    aux1 <- paste("s(", nl.predictors, ",df=",ndf, ")", collapse="+")
+    aux1 <- paste("gam::s(", nl.predictors, ",df=",ndf, ")", collapse="+")
     aux2 <- paste(c(aux1,auxop), collapse="+")
     fmla3 <- as.formula( paste( names(data)[p1]," ~ ", aux2, collapse = "+") ) ;
     fit <- gam(fmla3, data=data, family=binomial)
