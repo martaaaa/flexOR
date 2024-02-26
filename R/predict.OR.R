@@ -30,10 +30,12 @@
 #' # Fit a GAM model
 #' fit <- gam(diabetes ~ s(age) + s(mass) + s(pedigree) + pressure + glucose, data = PimaIndiansDiabetes2, family = binomial)
 #'
+#' # Calculate smooth odds ratios using flexOR
+#' mod1 <- flexOR(data = PimaIndiansDiabetes2, response = "diabetes", formula = ~ s(age) + s(mass) + s(pedigree) + pressure + glucose)
+#'
 #' # Predict the probabilities using predict.OR
-#' pdval <- c(21, 25, 29, 30, 31, 34, 35, 38, 40, 41, 41, 45, 50, 60, 65, 80)
-#' predict.OR(fit, predictor="age", pred.value=30, conf.level=0.95, prediction.values=pdval)
-#' #' 
+#' predict.OR(mod1, predictor="age")
+#' 
 #' }
 #'
 #' @keywords prediction, odds ratio, confidence interval, OR, predict method
