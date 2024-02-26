@@ -1,5 +1,5 @@
 #' @title predict.OR : Predict Method for OR Objects
-#'
+#' 
 #' @description
 #' Predicts values using a fitted OR model.
 #'

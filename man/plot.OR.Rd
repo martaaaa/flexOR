@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot.OR.R
 \name{plot.OR}
 \alias{plot.OR}
-\title{Plot.OR: Plot Smooth Odds Ratios}
+\title{plot.OR: Plot Smooth Odds Ratios}
 \usage{
 \method{plot}{OR}(
   x,
@@ -83,7 +83,7 @@ data(PimaIndiansDiabetes2)
 fit <- gam(diabetes ~ s(age) + s(mass) + s(pedigree) + pressure + glucose, data = PimaIndiansDiabetes2, family = binomial)
 
 # Calculate smooth odds ratios using flexOR
-mod1 <- flexOR(data = PimaIndiansDiabetes2, response = "diabetes", gamfit = fit)
+mod1 <- flexOR(data = PimaIndiansDiabetes2, response = "diabetes", formula = ~ s(age) + s(mass) + s(pedigree) + pressure + glucose)
 
 # Plot the smooth odds ratios
 plot.OR(mod1, predictor = "age")
