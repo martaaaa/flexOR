@@ -8,7 +8,7 @@
   x,
   predictor,
   prob = NULL,
-  pred.value = NULL,
+  ref.value = NULL,
   conf.level = 0.95,
   round.x = NULL,
   ref.label = NULL,
@@ -33,7 +33,7 @@
 
 \item{prob}{The probability level for the confidence interval. Default is NULL.}
 
-\item{pred.value}{The predicted value at which to calculate the smooth odds ratios. Default is NULL.}
+\item{ref.value}{The predicted value at which to calculate the smooth odds ratios. Default is NULL.}
 
 \item{conf.level}{The confidence level for the intervals. Default is 0.95.}
 

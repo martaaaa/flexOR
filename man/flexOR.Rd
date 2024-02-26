@@ -4,37 +4,35 @@
 \alias{flexOR}
 \title{flexOR: Flexible Odds Ratio Computation for GAM Models}
 \usage{
-flexOR(data, response = NULL, formula = NULL, gamfit)
+flexOR(data, response = NULL, formula = NULL)
 }
 \arguments{
 \item{data}{A data frame containing the variables.}
 
-\item{response_var}{The response variable as a character string.}
+\item{response}{The response variable as a character string.}
 
-\item{formula_var}{A formula specifying the model if not using a pre-fitted GAM.}
-
-\item{gamfit_var}{A pre-fitted GAM model (class 'Gam').}
+\item{formula}{A formula specifying the model.}
 }
 \value{
 A list containing the following components:
 \itemize{
   \item \code{dataset}: The dataset used for the analysis.
+  \item \code{formula}: The formula used in the GAM model.
   \item \code{gamfit}: The fitted GAM model.
+  \item \code{response}: The response variable used in the analysis.
 }
 }
 \description{
-Calculate odds ratios (ORs) for specified
-predictors in generalized additive models (GAMs).
+Calculate odds ratios (ORs) for specified predictors in generalized additive models (GAMs).
 
 The `flexOR` function computes odds ratios for predictors in GAM models.
 It provides flexibility in specifying predictors using either a data frame, a response
-variable and a formula, or a pre-fitted GAM model. The function is useful for
+variable, and a formula or a pre-fitted GAM model. The function is useful for
 understanding the impact of predictors on binary outcomes in GAMs.
 }
 \details{
-It accepts three different ways of specifying the model: by providing
-the data frame and response variable, by specifying the formula, or by providing
-a pre-fitted GAM model.
+It accepts two different ways of specifying the model: by providing
+the data frame and response variable or by specifying the formula.
 }
 \examples{
 \dontrun{
@@ -45,10 +43,10 @@ library(mlbench)
 data(PimaIndiansDiabetes2)
 
 # Fit a GAM model
-fit <- gam(diabetes ~ s(age) + s(mass) + s(pedigree) + pressure + glucose, data = PimaIndiansDiabetes2, family = binomial)
+fit <- gam::gam(diabetes ~ s(age) + s(mass) + s(pedigree) + pressure + glucose, data = PimaIndiansDiabetes2, family = binomial)
 
 # Calculate odds ratios using flexOR
-df_result <- flexOR(data = PimaIndiansDiabetes2, response = "diabetes", gamfit = fit)
+df_result <- flexOR(data = PimaIndiansDiabetes2, response = "diabetes", formula = ~ s(age) + s(mass) + s(pedigree) + pressure + glucose)
 }
 
 }

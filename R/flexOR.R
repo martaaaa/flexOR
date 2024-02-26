@@ -58,7 +58,7 @@ flexOR <- function(data, response = NULL, formula = NULL) {
   if (!is.data.frame(data)) {
     stop("data must be of class data.frame")
   }
-
+  
   
   if (missing(response) ) {  stop("The argument response is missing")
   }

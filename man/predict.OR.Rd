@@ -8,7 +8,7 @@
   object,
   predictor,
   prob = NULL,
-  pred.value = NULL,
+  ref.value = NULL,
   conf.level = 0.95,
   prediction.values = NULL,
   round.x = NULL,
@@ -23,7 +23,7 @@
 
 \item{prob}{Probability value for prediction. Use 0 for point prediction, 0.5 for median, or a custom value between 0 and 1.}
 
-\item{pred.value}{Optional custom prediction value (use with prob=NULL).}
+\item{ref.value}{Optional custom prediction value (use with prob=NULL).}
 
 \item{conf.level}{Confidence level for prediction intervals (default is 0.95).}
 
