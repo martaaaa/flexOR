@@ -36,9 +36,6 @@ the data frame and response variable or by specifying the formula.
 }
 \examples{
 \dontrun{
-# Load necessary libraries
-library(mlbench)
-
 # Load dataset
 data(PimaIndiansDiabetes2)
 

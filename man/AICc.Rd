@@ -23,9 +23,6 @@ that penalizes the number of parameters in the model to avoid overfitting.
 }
 \examples{
 \dontrun{
-# Load necessary libraries
-library(mlbench)
-
 # Load dataset
 data(PimaIndiansDiabetes2)
 

@@ -73,9 +73,6 @@ This function plots smooth odds ratios along with confidence intervals for a spe
 }
 \examples{
 \dontrun{
-# Load necessary libraries
-library(mlbench)
-
 # Load dataset
 data(PimaIndiansDiabetes2)
 
