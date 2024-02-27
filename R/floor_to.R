@@ -14,7 +14,6 @@
 #' floor_to(5, 2) # Returns 4, as 4 is the largest multiple of 2 less than or equal to 5.
 #' 
 #' @export
-#'
 floor_to <- function(x, to=1) {
   floored <- floor(x / to) * to;
   return(floored);
