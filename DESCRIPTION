@@ -2,7 +2,7 @@ Encoding: UTF-8
 Package: flexOR
 Type: Package
 Version: 1.0.0
-Date: 2024-02-24
+Date: 2024-02-27
 Title: Flexible odds ratio curves
 Authors@R: c(
   person(
@@ -30,9 +30,9 @@ Author: Marta Azevedo [aut, cre],
   Luis Meira-Machado [aut],
   Artur Araujo [aut]
 Maintainer: Marta Azevedo <marta.vasconcelos4@gmail.com>
-Depends: R (>= 3.1.0), survival, splines, gam, mlbench
-Imports: mgcv
-Suggests: testthat (>= 3.0.0)
+Depends: R (>= 3.1.0)
+Imports: gam, graphics, grDevices, mgcv, stats
+Suggests: testthat (>= 3.0.0), mlbench
 Config/testthat/edition: 3
 Description: Provides flexible hazard ratio curves allowing non-linear
   relationships between continuous predictors and survival.
