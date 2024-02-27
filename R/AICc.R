@@ -30,16 +30,16 @@
 #'
 #' @keywords GAM AICc model-selection
 #' @export
-AICc <- function(object){
-  if(class(object)[1] != "Gam" & class(object)[1] != "gam")
-    stop("'object' must be of class 'Gam' or 'gam'")
-  ll <- logLik(object)
-  d <- attributes(ll)$df
-  if(class(object)[1]=="Gam") n <- attributes(ll)$nobs
-  if(class(object)[1]=="gam") n <- object$df.null + 1
-  aic <- -2*logLik(ll)[1]+2*attributes(ll)$df
-  caic <- aic + 2*d*(d+1)/(n-d-1)
-  caic[d+1 >= n] <- Inf
-  attributes(caic)[c('df','nobs','class')] <- NULL
-  caic
+AICc <- function(object) {
+  if ( !( inherits(x=object, what="Gam") | inherits(x=object, what="gam") ) )
+    {stop("Argument 'object' must inherit from either class 'Gam' or 'gam'");}
+  ll <- logLik(object);
+  d <- attributes(ll)$df;
+  if ( inherits(x=object, what="Gam") ) {n <- attributes(ll)$nobs;}
+  if ( inherits(x=object, what="gam") ) {n <- object$df.null + 1;}
+  aic <- -2*logLik(ll)[1]+2*attributes(ll)$df;
+  caic <- aic + 2*d*(d+1)/(n-d-1);
+  caic[d+1 >= n] <- Inf;
+  attributes(caic)[c('df','nobs','class')] <- NULL;
+  return(caic);
 } # AICc
