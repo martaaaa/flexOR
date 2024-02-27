@@ -47,7 +47,7 @@ This function predicts values and prediction intervals using a fitted OR model.
 \examples{
 \dontrun{
 # Load the Pima Indians Diabetes dataset
-data(PimaIndiansDiabetes2)
+data(PimaIndiansDiabetes2, package=mlbench)
 
 # Fit a GAM model
 fit <- gam(diabetes ~ s(age) + s(mass) + s(pedigree) + pressure + glucose, data = PimaIndiansDiabetes2, family = binomial)
