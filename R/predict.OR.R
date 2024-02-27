@@ -22,7 +22,7 @@
 #' @examples
 #' \dontrun{
 #' # Load the Pima Indians Diabetes dataset
-#' data(PimaIndiansDiabetes2)
+#' data(PimaIndiansDiabetes2, package=mlbench)
 #'
 #' # Fit a GAM model
 #' fit <- gam(diabetes ~ s(age) + s(mass) + s(pedigree) + pressure + glucose, data = PimaIndiansDiabetes2, family = binomial)
@@ -42,7 +42,7 @@ predict.OR <- function(object, predictor, prob=NULL, ref.value=NULL, conf.level=
   if ( missing(object) ) {stop("Missing object");}
   if ( missing(predictor) ) {stop("Missing predictor");}
   if ( missing(round.x) ) {round.x <- 5;}
-  if ( !missing(ref.value) ) {prob <- 0.5; }
+  if ( !missing(ref.value) ) {prob <- 0.5;}
   if ( missing(prob) & missing(ref.value) ) {prob <- 0;}
   
   if (!inherits(object, "OR")) {stop("Object must be of class OR")}
