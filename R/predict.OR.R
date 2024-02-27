@@ -36,8 +36,8 @@
 #' }
 #'
 #' @keywords prediction, odds ratio, confidence interval, OR, predict method
+#' @importFrom stats approx as.formula binomial na.omit terms
 #' @export
-#' 
 predict.OR <- function(object, predictor, prob=NULL, ref.value=NULL, conf.level=0.95, prediction.values=NULL, round.x=NULL, ref.label=NULL, ...) {
   if ( missing(object) ) {stop("Missing object");}
   if ( missing(predictor) ) {stop("Missing predictor");}

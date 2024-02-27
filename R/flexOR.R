@@ -43,6 +43,7 @@
 #' }
 #' 
 #' @keywords GAM odds-ratio binary-data confidence-interval
+#' @importFrom stats as.formula binomial na.omit terms
 #' @export
 flexOR <- function(data, response = NULL, formula = NULL) {
   modelfit <- "TRUE"

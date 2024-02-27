@@ -45,8 +45,8 @@
 #'
 #' @keywords smooth odds ratios plot
 #' @importFrom stats update predict vcov quantile qnorm
+#' @importFrom grDevices rgb
 #' @import graphics
-#' @importFrom gam gam
 #' @export
 plot.OR <- function(
     x, predictor, prob=NULL, ref.value=NULL, conf.level=0.95, round.x=NULL,
