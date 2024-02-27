@@ -16,9 +16,6 @@
 #'
 #' @examples
 #' \dontrun{
-#' # Load necessary libraries
-#' library(mlbench)
-#' 
 #' # Load dataset
 #' data(PimaIndiansDiabetes2)
 #' 
@@ -46,4 +43,3 @@ AICc <- function(object){
   attributes(caic)[c('df','nobs','class')] <- NULL
   caic
 } # AICc
-
