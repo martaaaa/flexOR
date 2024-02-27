@@ -30,7 +30,7 @@
 #'
 #' @keywords GAM AICc model-selection
 #' @importFrom stats logLik
-#' #' @export
+#' @export
 AICc <- function(object) {
   if ( !( inherits(x=object, what="Gam") | inherits(x=object, what="gam") ) )
     {stop("'object' must inherit from either class 'Gam' or 'gam'");}
