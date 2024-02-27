@@ -29,7 +29,8 @@
 #' \code{\link{gam}}, \code{\link{logLik}}, \code{\link{AIC}}
 #'
 #' @keywords GAM AICc model-selection
-#' @export
+#' @importFrom stats logLik
+#' #' @export
 AICc <- function(object) {
   if ( !( inherits(x=object, what="Gam") | inherits(x=object, what="gam") ) )
     {stop("'object' must inherit from either class 'Gam' or 'gam'");}
