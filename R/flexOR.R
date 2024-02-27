@@ -32,9 +32,6 @@
 #'
 #' @examples
 #' \dontrun{
-#' # Load necessary libraries
-#' library(mlbench)
-#' 
 #' # Load dataset
 #' data(PimaIndiansDiabetes2)
 #'

@@ -21,9 +21,6 @@
 #'
 #' @examples
 #' \dontrun{
-#' # Load necessary libraries
-#' library(mlbench)
-#'
 #' # Load the Pima Indians Diabetes dataset
 #' data(PimaIndiansDiabetes2)
 #'
