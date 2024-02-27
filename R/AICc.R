@@ -32,7 +32,7 @@
 #' @export
 AICc <- function(object) {
   if ( !( inherits(x=object, what="Gam") | inherits(x=object, what="gam") ) )
-    {stop("Argument 'object' must inherit from either class 'Gam' or 'gam'");}
+    {stop("'object' must inherit from either class 'Gam' or 'gam'");}
   ll <- logLik(object);
   d <- attributes(ll)$df;
   if ( inherits(x=object, what="Gam") ) {n <- attributes(ll)$nobs;}
