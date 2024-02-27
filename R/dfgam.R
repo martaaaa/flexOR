@@ -138,14 +138,14 @@ dfgam <- function(response, nl.predictors, other.predictors=NULL, smoother="s", 
   if(missing(other.predictors)){
     aux1 <- paste("s(", nl.predictors, ",df=",df, ")", collapse="+")
     fmla3 <- as.formula( paste( names(data)[p1]," ~ ", aux1, collapse = "+") ) ;
-    fit <- gam(fmla3, data=data, family=binomial)
+    fit <- gam::gam(fmla3, data=data, family=binomial)
   }
   if(!missing(other.predictors)){
     auxop <- paste(other.predictors, collapse="+")
     aux1 <- paste("s(", nl.predictors, ",df=",ndf, ")", collapse="+")
     aux2 <- paste(c(aux1,auxop), collapse="+")
     fmla3 <- as.formula( paste( names(data)[p1]," ~ ", aux2, collapse = "+") ) ;
-    fit <- gam(fmla3, data=data, family=binomial)
+    fit <- gam::gam(fmla3, data=data, family=binomial)
   }
   
   if(!is.null(msg)) print(msg)
