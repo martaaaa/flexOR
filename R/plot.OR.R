@@ -31,16 +31,24 @@
 #' @examples
 #' \dontrun{
 #' # Load dataset
-#' data(PimaIndiansDiabetes2, package=mlbench)
+#' data(PimaIndiansDiabetes2, package=mlbench);
 #'
 #' # Fit a GAM model
-#' fit <- gam(diabetes ~ s(age) + s(mass) + s(pedigree) + pressure + glucose, data = PimaIndiansDiabetes2, family = binomial)
+#' fit <- gam(
+#'   diabetes ~ s(age) + s(mass) + s(pedigree) + pressure + glucose,
+#'   data=PimaIndiansDiabetes2,
+#'   family=binomial
+#' );
 #'
 #' # Calculate smooth odds ratios using flexOR
-#' mod1 <- flexOR(data = PimaIndiansDiabetes2, response = "diabetes", formula = ~ s(age) + s(mass) + s(pedigree) + pressure + glucose)
+#' mod1 <- flexOR(
+#'   data=PimaIndiansDiabetes2,
+#'   response="diabetes",
+#'   formula=~ s(age) + s(mass) + s(pedigree) + pressure + glucose
+#' );
 #'
 #' # Plot the smooth odds ratios
-#' plot.OR(mod1, predictor = "age")
+#' plot.OR(mod1, predictor="age");
 #' }
 #'
 #' @keywords smooth odds ratios plot
@@ -51,8 +59,8 @@
 plot.OR <- function(
     x, predictor, prob=NULL, ref.value=NULL, conf.level=0.95, round.x=NULL,
     ref.label=NULL, col, col.area, main, xlab, ylab, lty, xlim, ylim, xx, ylog=TRUE,
-    log=ifelse(ylog, "", "y"), ...) 
-{
+    log=ifelse(ylog, "", "y"), ...
+) {
   object <- x;
   if ( !inherits(object, "OR") ) {stop("Object must be of class OR");}
   mydata <- object$dataset;
@@ -71,19 +79,23 @@ plot.OR <- function(
   if ( missing(predictor) ) {stop("Missing predictor");}
   if ( missing(col) & length(conf.level) == 1) {col <- c(1,1,1);}
   if ( missing(col) & length(conf.level) == 2) {col <- c(1,1,1,1,1);}
-  if ( missing(col.area) ) {col.area <- c(rgb(0.9, 0.9, 0.9, 0.5), rgb(0.7, 0.7, 0.7, 0.5));}
-  if ( missing(ylab) ) {ylab <- if (ylog) "Ln OR(Z,Zref)" else "OR(Z,Zref)";}
+  if ( missing(col.area) ) {
+    col.area <- c(rgb(0.9, 0.9, 0.9, 0.5), rgb(0.7, 0.7, 0.7, 0.5));
+  }
+  if ( missing(ylab) ) {ylab <- if (ylog) {"Ln OR(Z,Zref)";} else {"OR(Z,Zref)";}}
   if ( missing(lty) & length(conf.level) == 1 ) {lty <- c(1, 2, 2);}
   if ( missing(lty) & length(conf.level) == 2 ) {lty <- c(1, 2, 2, 3, 3);}
   if ( is.list(fit$x) ) {fit <- update(fit, . ~ ., x=TRUE);}
-  if (length(conf.level) > 2) {stop("The length of 'conf.level' must be between 1 and 2");}
-  if (length(conf.level) > 1) conf.level <- sort(conf.level)
+  if (length(conf.level) > 2) {
+    stop("The length of 'conf.level' must be between 1 and 2");
+  }
+  if (length(conf.level) > 1) {conf.level <- sort(conf.level);}
   if (min(conf.level) <= 0.5) {stop("'conf.level' must be greater than 0.5");}
   if (max(conf.level) >= 1) {stop("'conf.level' must be less than 1");}
   
   ctype <- "FALSE";
   qvalue <- (1+conf.level[1])/2;
-  if (length(conf.level) > 1) qvalue2 <- (1+conf.level[2])/2;
+  if (length(conf.level) > 1) {qvalue2 <- (1+conf.level[2])/2;}
   linear.predictor <- FALSE;
   k1 <- 9999;
   k <- which(names(mydata) == predictor);
@@ -113,7 +125,9 @@ plot.OR <- function(
     if (linear.predictor) {
       xref1 <- matrix(xref1, nrow=dim(fit$x)[1], ncol=1, byrow=TRUE);
     } else {
-      xref1 <- matrix(xref1, nrow=dim(fit$x)[1], ncol=dim(submatriz.diseno)[2], byrow=TRUE);
+      xref1 <- matrix(
+        xref1, nrow=dim(fit$x)[1], ncol=dim(submatriz.diseno)[2], byrow=TRUE
+      );
     }
     eta.ref1 <- fit$x[,indices]-xref1;
     var.eta.ref1 <- rep(NA, n);
@@ -148,7 +162,9 @@ plot.OR <- function(
     if (linear.predictor) {
       xref1 <- matrix(xref1, nrow=dim(fit$x)[1], ncol=1, byrow=TRUE);
     }	else {
-      xref1 <- matrix(xref1, nrow=dim(fit$x)[1], ncol=dim(submatriz.diseno)[2], byrow=TRUE);
+      xref1 <- matrix(
+        xref1, nrow=dim(fit$x)[1], ncol=dim(submatriz.diseno)[2], byrow=TRUE
+      );
     }
     eta.ref1 <- fit$x[,indices]-xref1;
     var.eta.ref1 <- rep(NA, n);
@@ -175,7 +191,9 @@ plot.OR <- function(
     if (linear.predictor) {
       xref1 <- matrix(xref1, nrow=dim(fit$x)[1], ncol=1, byrow=TRUE);
     } else {
-      xref1 <- matrix(xref1, nrow=dim(fit$x)[1], ncol=dim(submatriz.diseno)[2], byrow=TRUE);
+      xref1 <- matrix(
+        xref1, nrow=dim(fit$x)[1], ncol=dim(submatriz.diseno)[2], byrow=TRUE
+      );
     }
     eta.ref1 <- fit$x[,indices]-xref1;
     var.eta.ref1 <- rep(NA,n);
@@ -189,8 +207,14 @@ plot.OR <- function(
     else {main <- paste("Smooth odds ratio for", names(a)[k]);}
   }
   
-  tmat <- cbind(eta.ref, eta.ref-qnorm(qvalue)*se.eta.ref1, eta.ref+qnorm(qvalue)*se.eta.ref1);
-  if (length(conf.level) > 1) {tmat <- cbind(tmat, eta.ref-qnorm(qvalue2)*se.eta.ref1, eta.ref+qnorm(qvalue2)*se.eta.ref1);}
+  tmat <- cbind(
+    eta.ref, eta.ref-qnorm(qvalue)*se.eta.ref1, eta.ref+qnorm(qvalue)*se.eta.ref1
+  );
+  if (length(conf.level) > 1) {
+    tmat <- cbind(
+      tmat, eta.ref-qnorm(qvalue2)*se.eta.ref1, eta.ref+qnorm(qvalue2)*se.eta.ref1
+    );
+  }
   if (!ylog) {tmat <- exp(tmat);}
   
   line <- rep(0, n);
@@ -208,16 +232,16 @@ plot.OR <- function(
   if ( xref < min(xlim) | xref > max(xlim) ) {
     stop("The reference value is out of range of 'xlim'");
   }
+  
   #  matplot(
   #    x=a[jj,k], y=tmat[jj,], type="l", lty=c(1, 5, 5, 2), col=c(1, 2, 2, 1),
   #    xlab=xlab, ylab=ylab, xlim=xlim, ylim=ylim, log=log, xaxt="n", main=main, ...
   #  );
   
-  if (length(conf.level) > 1){
-    
-    tmat2 <- tmat
-    tmat2[,2:3] <- tmat[,4:5]
-    tmat2[,4:5] <- tmat[,2:3]
+  if (length(conf.level) > 1) {
+    tmat2 <- tmat;
+    tmat2[,2:3] <- tmat[,4:5];
+    tmat2[,4:5] <- tmat[,2:3];
     
     #plot
     matplot(
@@ -232,7 +256,7 @@ plot.OR <- function(
       lty = lty, #a
       xlab = xlab,
       ylab = ylab
-    )
+    );
     
     #shaded areas
     polygon(
@@ -240,14 +264,14 @@ plot.OR <- function(
       c(tmat[jj, 4], rev(tmat[jj, 5])),
       col = col.area[1],  
       border = NA
-    )
+    );
     
     polygon(
       c(a[jj,k], rev(a[jj,k])),
       c(tmat[jj, 2], rev(tmat[jj, 3])),
       col = col.area[2],  
       border = NA
-    )
+    );
     
     # Add lines to the plot 
     matlines(
@@ -256,17 +280,17 @@ plot.OR <- function(
       lty = lty,
       col = 1,
       type = "l"
-    )
+    );
     
     # Definition of the x axes
     xxx <- round( seq(min(a[,k]), max(a[,k]),len=5) );
     if ( missing(xx) ) {
       xx <- c( min(a[,k]), round(xref,1), xxx[2], xxx[3], xxx[4], max(a[,k]) );
     }
-    axis(1, xx, ...)
+    axis(1, xx, ...);
   }
   
-  if (length(conf.level) == 1){
+  if (length(conf.level) == 1) {
     matplot(
       x = a[jj,k],
       y = tmat[jj, ],
@@ -279,14 +303,14 @@ plot.OR <- function(
       lty = lty, #a
       xlab = xlab,
       ylab = ylab
-    )
+    );
     
     polygon(
       c(a[jj,k], rev(a[jj,k])),
       c(tmat[jj, 2], rev(tmat[jj, 3])),
       col = col.area[1],  
       border = NA
-    )
+    );
     
     # Add lines
     matlines(
@@ -294,16 +318,17 @@ plot.OR <- function(
       y = tmat[jj, ],
       lty = lty,  
       col = col   
-    )
+    );
+    
     # Definition of the x axes
     xxx <- round( seq(min(a[,k]), max(a[,k]),len=5) );
     if ( missing(xx) ) {
       xx <- c( min(a[,k]), round(xref,1), xxx[2], xxx[3], xxx[4], max(a[,k]) );
     }
-    axis(1, xx, ...)
+    axis(1, xx, ...);
   }
   
-  y <- c(0,0)  
+  y <- c(0, 0);
   
   if ( missing(xlim) ) {
     v1 <- min(a[,k])+( max(a[,k])-min(a[,k]) )/10;
@@ -324,9 +349,15 @@ plot.OR <- function(
     arrows(xref, y[1], xref, y[2], length=0.08);
     ys <- y[1];
     if (ys > 2*y[1]-(2*y[1]-y[2])/10) {
-      text(xref, y[1], paste( n.predictor, "=", round(xref, round.x) ), adj=c(0.5, 2.3), ...);
+      text(
+        xref, y[1], paste( n.predictor, "=", round(xref, round.x) ),
+        adj=c(0.5, 2.3), ...
+      );
     } else {
-      text(xref, y[1], paste( n.predictor, "=", round(xref, round.x) ), adj=c(0.5, -0.7), ...);
+      text(
+        xref, y[1], paste( n.predictor, "=", round(xref, round.x) ),
+        adj=c(0.5, -0.7), ...
+      );
     }
   } else if (xref <= v1) {
     v3 <- ( max(xlim)-min(xlim) )/100;
@@ -335,9 +366,15 @@ plot.OR <- function(
     arrows(xref2, y[1], xref2, y[2], length=0.08);
     ys <- y[1];
     if (ys > 2*y[1]-(2*y[1]-y[2])/10)  {
-      text(xref, y[1], paste( n.predictor, "=", round(xref, round.x) ), adj=c(0, 2.3), ...);
+      text(
+        xref, y[1], paste( n.predictor, "=", round(xref, round.x) ),
+        adj=c(0, 2.3), ...
+      );
     } else {
-      text(xref, y[1], paste( n.predictor, "=", round(xref, round.x) ), adj=c(0, -0.7), ...);
+      text(
+        xref, y[1], paste( n.predictor, "=", round(xref, round.x) ),
+        adj=c(0, -0.7), ...
+      );
     }
   } else if (xref >= v2) {
     v3 <- ( max(xlim)-min(xlim) )/100;
@@ -346,15 +383,22 @@ plot.OR <- function(
     arrows(xref2, y[1], xref2, y[2], length=0.08);
     ys <- y[1];
     if (ys > 2*y[1]-(2*y[1]-y[2])/10) {
-      text(xref, y[1], paste( n.predictor, "=", round(xref, round.x) ), adj=c(1, 2.3), ...);
+      text(
+        xref, y[1], paste( n.predictor, "=", round(xref, round.x) ),
+        adj=c(1, 2.3), ...
+      );
     } else {
-      text(xref, y[1], paste( n.predictor, "=", round(xref, round.x) ), adj=c(1, -0.7), ...);
+      text(
+        xref, y[1], paste( n.predictor, "=", round(xref, round.x) ),
+        adj=c(1, -0.7), ...
+      );
     }
   }
-  tmat2 <- tmat
-  if (length(conf.level) > 1){
-    tmat2 <- tmat
-    tmat2[,2:3] <- tmat[,4:5]
-    tmat2[,4:5] <- tmat[,2:3]}
-  return(invisible(list(estimates=tmat2, xref=xref)))
+  tmat2 <- tmat;
+  if (length(conf.level) > 1) {
+    tmat2 <- tmat;
+    tmat2[,2:3] <- tmat[,4:5];
+    tmat2[,4:5] <- tmat[,2:3]
+  }
+  return( invisible( list(estimates=tmat2, xref=xref) ) );
 } # plot.OR

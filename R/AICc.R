@@ -22,8 +22,8 @@
 #' # Fit a GAM model
 #' fit <- gam(
 #'   diabetes ~ s(age) + s(mass) + s(pedigree) + pressure + glucose,
-#'   data = PimaIndiansDiabetes2,
-#'   family = binomial
+#'   data=PimaIndiansDiabetes2,
+#'   family=binomial
 #' );
 #'
 #' # Calculate AICc

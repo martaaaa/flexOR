@@ -55,8 +55,9 @@
 #' @keywords GAM degrees-of-freedom model-selection smoothing AIC AICc BIC
 #' @importFrom stats as.formula binomial AIC BIC
 #' @export
-dfgam <- function(response, nl.predictors, other.predictors=NULL, smoother="s",
-    method = "AIC", data, step=NULL
+dfgam <- function(
+    response, nl.predictors, other.predictors=NULL, smoother="s",
+    method="AIC", data, step=NULL
 ) {
   #options(warn=-1);
   if ( missing(data) ) {stop("The argument data is missing");}
