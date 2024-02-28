@@ -96,7 +96,7 @@ predict.OR <- function(object, predictor, prob=NULL, ref.value=NULL, conf.level=
   mydata <- na.omit(mydata)
   
   fit <- model
-  if (class(fit$x)[1] == "list") fit <- update(fit, . ~ ., x = T)
+  if ( is.list(fit$x) ) {fit <- update(fit, . ~ ., x=TRUE);}
   ctype <- "FALSE";
   qvalue <- (1+conf.level)/2;
   linear.predictor <- FALSE;
