@@ -75,7 +75,7 @@ plot.OR <- function(
   if ( missing(ylab) ) {ylab <- if (ylog) "Ln OR(Z,Zref)" else "OR(Z,Zref)";}
   if ( missing(lty) & length(conf.level) == 1 ) {lty <- c(1, 2, 2);}
   if ( missing(lty) & length(conf.level) == 2 ) {lty <- c(1, 2, 2, 3, 3);}
-  if (class(fit$x)[1] == "list") fit <- update(fit, . ~ ., x = T)
+  if ( is.list(fit$x) ) {fit <- update(fit, . ~ ., x=TRUE);}
   if (length(conf.level) > 2) {stop("The length of 'conf.level' must be between 1 and 2");}
   if (length(conf.level) > 1) conf.level <- sort(conf.level)
   if (min(conf.level) <= 0.5) {stop("'conf.level' must be greater than 0.5");}
