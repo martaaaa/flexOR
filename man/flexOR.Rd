@@ -23,12 +23,14 @@ A list containing the following components:
 }
 }
 \description{
-Calculate odds ratios (ORs) for specified predictors in generalized additive models (GAMs).
+Calculate odds ratios (ORs) for specified predictors in
+generalized additive models (GAMs).
 
 The `flexOR` function computes odds ratios for predictors in GAM models.
-It provides flexibility in specifying predictors using either a data frame, a response
-variable, and a formula or a pre-fitted GAM model. The function is useful for
-understanding the impact of predictors on binary outcomes in GAMs.
+It provides flexibility in specifying predictors using either a data frame,
+a response variable, and a formula or a pre-fitted GAM model.
+The function is useful for understanding the impact of predictors on
+binary outcomes in GAMs.
 }
 \details{
 It accepts two different ways of specifying the model: by providing
@@ -37,13 +39,21 @@ the data frame and response variable or by specifying the formula.
 \examples{
 \dontrun{
 # Load dataset
-data(PimaIndiansDiabetes2, package=mlbench)
+data(PimaIndiansDiabetes2, package=mlbench);
 
 # Fit a GAM model
-fit <- gam(diabetes ~ s(age) + s(mass) + s(pedigree) + pressure + glucose, data = PimaIndiansDiabetes2, family = binomial)
+fit <- gam(
+  diabetes ~ s(age) + s(mass) + s(pedigree) + pressure + glucose,
+  data=PimaIndiansDiabetes2,
+  family=binomial
+);
 
 # Calculate odds ratios using flexOR
-df_result <- flexOR(data = PimaIndiansDiabetes2, response = "diabetes", formula = ~ s(age) + s(mass) + s(pedigree) + pressure + glucose)
+df_result <- flexOR(
+  data=PimaIndiansDiabetes2,
+  response="diabetes",
+  formula=~ s(age) + s(mass) + s(pedigree) + pressure + glucose
+);
 }
 
 }

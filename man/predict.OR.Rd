@@ -21,7 +21,8 @@
 
 \item{predictor}{The predictor variable for which you want to make predictions.}
 
-\item{prob}{Probability value for prediction. Use 0 for point prediction, 0.5 for median, or a custom value between 0 and 1.}
+\item{prob}{Probability value for prediction. Use 0 for point prediction,
+0.5 for median, or a custom value between 0 and 1.}
 
 \item{ref.value}{Optional custom prediction value (use with prob=NULL).}
 
@@ -47,17 +48,24 @@ This function predicts values and prediction intervals using a fitted OR model.
 \examples{
 \dontrun{
 # Load the Pima Indians Diabetes dataset
-data(PimaIndiansDiabetes2, package=mlbench)
+data(PimaIndiansDiabetes2, package=mlbench);
 
 # Fit a GAM model
-fit <- gam(diabetes ~ s(age) + s(mass) + s(pedigree) + pressure + glucose, data = PimaIndiansDiabetes2, family = binomial)
+fit <- gam(
+  diabetes ~ s(age) + s(mass) + s(pedigree) + pressure + glucose,
+  data=PimaIndiansDiabetes2,
+  family=binomial
+);
 
 # Calculate smooth odds ratios using flexOR
-mod1 <- flexOR(data = PimaIndiansDiabetes2, response = "diabetes", formula = ~ s(age) + s(mass) + s(pedigree) + pressure + glucose)
+mod1 <- flexOR(
+  data=PimaIndiansDiabetes2,
+  response="diabetes",
+  formula= ~ s(age) + s(mass) + s(pedigree) + pressure + glucose
+);
 
 # Predict the probabilities using predict.OR
-predict.OR(mod1, predictor="age")
-
+predict.OR(mod1, predictor="age");
 }
 
 }

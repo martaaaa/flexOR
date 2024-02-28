@@ -52,13 +52,23 @@ determining the appropriate degrees of freedom for smoothing terms in GAMs.
 \examples{
 \dontrun{
 # Load dataset
-data(PimaIndiansDiabetes2, package=mlbench)
+data(PimaIndiansDiabetes2, package=mlbench);
 
 # Fit a GAM model
-fit <- gam(diabetes ~ s(age) + s(mass) + s(pedigree) + pressure + glucose, data = PimaIndiansDiabetes2, family = binomial)
+fit <- gam(
+  diabetes ~ s(age) + s(mass) + s(pedigree) + pressure + glucose,
+  data=PimaIndiansDiabetes2,
+  family=binomial
+);
 
 # Calculate degrees of freedom using AIC
-df_result <- dfgam(response = "diabetes", nl.predictors = c("age", "mass", "pedigree"), smoother = "s", method = "AIC", data = PimaIndiansDiabetes2)
+df_result <- dfgam(
+  response="diabetes",
+  nl.predictors=c("age", "mass", "pedigree"),
+  smoother="s",
+  method="AIC",
+  data=PimaIndiansDiabetes2
+);
 }
 
 }
