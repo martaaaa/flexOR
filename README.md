@@ -33,7 +33,7 @@ Hosmer, D. W. and Lemeshow, S. and Sturdivant, R. X. (2013). *Applied Logistic R
 
 Royston, P. and Altman, D. G. and Sauerbrei, W. (2006). Dichotomizing continuous predictors in multiple regression: A bad idea. *Statistics in Medicine*, **25**(1), 127–141. [doi:10.1002/sim.2331](https://doi.org/10.1002/sim.2331)
 
-Hastie, T. J. and Tibshirani, R. J. (1990) *Generalized Additive Models*, Chapman & Hall/CRC, New York, NY.
+Hastie, T. J. and Tibshirani, R. J. (1990). *Generalized Additive Models*, Chapman & Hall/CRC, New York, NY.
 
 Wood, S. N. (2017). *Generalized Additive Models: An Introduction with R: Second Edition*, Chapman & Hall/CRC, London, UK.
 
