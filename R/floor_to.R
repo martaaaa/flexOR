@@ -1,6 +1,6 @@
 #' @title floor_to: Rounds a number down
 #' @description
-#' The floor_to function takes a numeric value or vector (x) and rounds it 
+#' Takes a numeric value or vector (x) and rounds it
 #' down to the nearest multiple of a specified base (to).
 #' If the to argument is not provided, it defaults to rounding down to the nearest integer.
 #' The result is returned as a numeric value or vector of the same length as the input.
@@ -14,6 +14,7 @@
 #' floor_to(7, 3); # Returns 6, as 6 is the largest multiple of 3 less than or equal to 7.
 #' floor_to(5, 2); # Returns 4, as 4 is the largest multiple of 2 less than or equal to 5.
 #' 
+#' @keywords arith
 #' @export
 floor_to <- function(x, to=1) {
   floored <- floor(x / to) * to;
