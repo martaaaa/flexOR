@@ -44,7 +44,7 @@
 #'  de Boor, C. (2001).
 #'  \emph{A Practical Guide to Splines: Revised Edition}, Springer, New York, NY.
 #'  
-#'  Wood, S. N. and Pya, N. and Säfken, B. (2016).
+#'  Wood, S. N. and Pya, N. and Safken, B. (2016).
 #'  Smoothing Parameter and Model Selection for General Smooth Models.
 #'  \emph{Journal of the American Statistical Association}, \bold{111}(516), 1548-1563.
 #'  \doi{10.1080/01621459.2016.1180986}
