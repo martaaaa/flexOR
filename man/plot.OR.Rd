@@ -43,6 +43,8 @@
 
 \item{col}{Vector of colors for plotting. Default is c("black", "black", "grey85").}
 
+\item{col.area}{Vector of colors for the confidence intervals.}
+
 \item{main}{The title of the plot. Default is generated based on the predictor variable.}
 
 \item{xlab}{Label for the x-axis. Default is the name of the predictor variable.}
@@ -68,8 +70,6 @@ This function doesn't return a value. It is used for generating a plot.
 }
 \description{
 Plots smooth odds ratios along with confidence intervals for a specified predictor.
-
-This function plots smooth odds ratios along with confidence intervals for a specified predictor.
 }
 \examples{
 \dontrun{
@@ -95,7 +95,9 @@ plot.OR(mod1, predictor="age");
 }
 
 }
-\keyword{odds}
-\keyword{plot}
-\keyword{ratios}
+\keyword{hplot}
+\keyword{methods}
+\keyword{models}
+\keyword{nonlinear}
+\keyword{regression}
 \keyword{smooth}

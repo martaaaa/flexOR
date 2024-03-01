@@ -13,7 +13,7 @@ AICc(object)
 A numeric value representing the AICc for the GAM model.
 }
 \description{
-Calculate AICc (Akaike Information Criterion corrected for small sample sizes)
+Calculates AICc (Akaike Information Criterion corrected for small sample sizes)
 for Generalized Additive Models (GAM).
 }
 \details{
@@ -40,6 +40,7 @@ AICc_value <- AICc(fit);
 \seealso{
 \code{\link{gam}}, \code{\link{logLik}}, \code{\link{AIC}}
 }
-\keyword{AICc}
-\keyword{GAM}
-\keyword{model-selection}
+\keyword{models}
+\keyword{nonlinear}
+\keyword{regression}
+\keyword{smooth}

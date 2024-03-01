@@ -69,11 +69,8 @@ predict.OR(mod1, predictor="age");
 }
 
 }
-\keyword{OR,}
-\keyword{confidence}
-\keyword{interval,}
-\keyword{method}
-\keyword{odds}
-\keyword{predict}
-\keyword{prediction,}
-\keyword{ratio,}
+\keyword{methods}
+\keyword{models}
+\keyword{nonlinear}
+\keyword{regression}
+\keyword{smooth}

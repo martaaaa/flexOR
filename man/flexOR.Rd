@@ -23,10 +23,7 @@ A list containing the following components:
 }
 }
 \description{
-Calculate odds ratios (ORs) for specified predictors in
-generalized additive models (GAMs).
-
-The `flexOR` function computes odds ratios for predictors in GAM models.
+Computes odds ratios for predictors in GAM models.
 It provides flexibility in specifying predictors using either a data frame,
 a response variable, and a formula or a pre-fitted GAM model.
 The function is useful for understanding the impact of predictors on
@@ -57,7 +54,7 @@ df_result <- flexOR(
 }
 
 }
-\keyword{GAM}
-\keyword{binary-data}
-\keyword{confidence-interval}
-\keyword{odds-ratio}
+\keyword{models}
+\keyword{nonlinear}
+\keyword{regression}
+\keyword{smooth}
