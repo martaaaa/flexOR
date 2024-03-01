@@ -43,7 +43,7 @@
 #' predict.OR(mod1, predictor="age");
 #' }
 #'
-#' @keywords prediction, odds ratio, confidence interval, OR, predict method
+#' @keywords methods models nonlinear regression smooth
 #' @importFrom stats approx as.formula binomial na.omit terms
 #' @export
 predict.OR <- function(
