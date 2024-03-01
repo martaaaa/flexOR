@@ -1,7 +1,7 @@
 #' @title AICc: Calculation for GAM Models
 #'
 #' @description
-#' Calculate AICc (Akaike Information Criterion corrected for small sample sizes)
+#' Calculates AICc (Akaike Information Criterion corrected for small sample sizes)
 #' for Generalized Additive Models (GAM).
 #'
 #' @param object An object of class "Gam" or "gam" representing a fitted GAM model.
@@ -32,7 +32,7 @@
 #' @seealso
 #' \code{\link{gam}}, \code{\link{logLik}}, \code{\link{AIC}}
 #'
-#' @keywords GAM AICc model-selection
+#' @keywords models nonlinear regression smooth
 #' @importFrom stats logLik
 #' @export
 AICc <- function(object) {
