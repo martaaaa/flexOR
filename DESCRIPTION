@@ -32,8 +32,7 @@ Author: Marta Azevedo [aut, cre],
 Maintainer: Marta Azevedo <marta.vasconcelos4@gmail.com>
 Depends: R (>= 3.1.0)
 Imports: gam, graphics, grDevices, mgcv, stats
-Suggests: testthat (>= 3.0.0), mlbench
-Config/testthat/edition: 3
+Suggests: mlbench
 Description: Provides flexible hazard ratio curves allowing non-linear
   relationships between continuous predictors and survival.
   To better understand the effects that each continuous covariate has on the outcome,
