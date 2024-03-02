@@ -74,7 +74,7 @@ Plots smooth odds ratios along with confidence intervals for a specified predict
 \examples{
 \dontrun{
 # Load dataset
-data(PimaIndiansDiabetes2, package=mlbench);
+data(PimaIndiansDiabetes2, package="mlbench");
 
 # Fit a GAM model
 fit <- gam(
