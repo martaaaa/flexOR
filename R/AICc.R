@@ -17,7 +17,7 @@
 #' @examples
 #' \dontrun{
 #' # Load dataset
-#' data(PimaIndiansDiabetes2, package=mlbench);
+#' data(PimaIndiansDiabetes2, package="mlbench");
 #' 
 #' # Fit a GAM model
 #' fit <- gam(
