@@ -32,13 +32,6 @@
 #' # Load dataset
 #' data(PimaIndiansDiabetes2, package="mlbench");
 #'
-#' # Fit a GAM model
-#' fit <- gam(
-#'   diabetes ~ s(age) + s(mass) + s(pedigree) + pressure + glucose,
-#'   data=PimaIndiansDiabetes2,
-#'   family=binomial
-#' );
-#'
 #' # Calculate degrees of freedom using AIC
 #' df_result <- dfgam(
 #'   response="diabetes",
@@ -131,7 +124,7 @@ dfgam <- function(
         for (h in 1:lmat) {
           ndf <- df;
           ndf[k] <- mat[h,1,k];
-          aux1 <- paste("s(", nl.predictors, ",df=",ndf, ")", collapse="+");
+          aux1 <- paste("gam::s(", nl.predictors, ",df=",ndf, ")", collapse="+");
           if (is.null(other.predictors)) {aux2 <- aux1;}
           else {aux2 <- paste(c(aux1,covar2), collapse="+");}
           fmla3 <- as.formula(
@@ -159,13 +152,13 @@ dfgam <- function(
   res[1:nnl] <- df[1:nnl];
   
   if ( missing(other.predictors) ) {
-    aux1 <- paste("s(", nl.predictors, ",df=",df, ")", collapse="+");
+    aux1 <- paste("gam::s(", nl.predictors, ",df=",df, ")", collapse="+");
     fmla3 <- as.formula( paste( names(data)[p1]," ~ ", aux1, collapse = "+") );
     fit <- gam::gam(fmla3, data=data, family=binomial);
   }
   if ( !missing(other.predictors) ) {
     auxop <- paste(other.predictors, collapse="+");
-    aux1 <- paste("s(", nl.predictors, ",df=",ndf, ")", collapse="+");
+    aux1 <- paste("gam::s(", nl.predictors, ",df=",ndf, ")", collapse="+");
     aux2 <- paste(c(aux1,auxop), collapse="+");
     fmla3 <- as.formula( paste( names(data)[p1]," ~ ", aux2, collapse = "+") );
     fit <- gam::gam(fmla3, data=data, family=binomial);
