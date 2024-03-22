@@ -47,7 +47,6 @@ Information Criterion) as the selection criteria. This function is useful for
 determining the appropriate degrees of freedom for smoothing terms in GAMs.
 }
 \examples{
-\dontrun{
 # Load dataset
 data(PimaIndiansDiabetes2, package="mlbench");
 
@@ -59,7 +58,9 @@ df_result <- dfgam(
   method="AIC",
   data=PimaIndiansDiabetes2
 );
-}
+
+# Print result
+print(df_result);
 
 }
 \keyword{models}

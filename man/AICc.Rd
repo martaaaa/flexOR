@@ -22,11 +22,10 @@ for small sample sizes) for a given GAM model. AICc is a measure of model fit
 that penalizes the number of parameters in the model to avoid overfitting.
 }
 \examples{
-\dontrun{
 # Load dataset
 data(PimaIndiansDiabetes2, package="mlbench");
 
-# Fit a GAM model
+# Fit GAM model
 fit <- mgcv::gam(
   diabetes ~ s(age) + s(mass) + s(pedigree) + pressure + glucose,
   data=PimaIndiansDiabetes2,
@@ -35,7 +34,7 @@ fit <- mgcv::gam(
 
 # Calculate AICc
 AICc(fit);
-}
+
 }
 \seealso{
 \code{\link{gam}}, \code{\link{logLik}}, \code{\link{AIC}}
