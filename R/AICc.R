@@ -15,11 +15,10 @@
 #' A numeric value representing the AICc for the GAM model.
 #'
 #' @examples
-#' \dontrun{
 #' # Load dataset
 #' data(PimaIndiansDiabetes2, package="mlbench");
 #' 
-#' # Fit a GAM model
+#' # Fit GAM model
 #' fit <- mgcv::gam(
 #'   diabetes ~ s(age) + s(mass) + s(pedigree) + pressure + glucose,
 #'   data=PimaIndiansDiabetes2,
@@ -28,7 +27,7 @@
 #'
 #' # Calculate AICc
 #' AICc(fit);
-#' }
+#' 
 #' @seealso
 #' \code{\link{gam}}, \code{\link{logLik}}, \code{\link{AIC}}
 #'
