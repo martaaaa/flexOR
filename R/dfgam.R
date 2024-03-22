@@ -28,7 +28,6 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
 #' # Load dataset
 #' data(PimaIndiansDiabetes2, package="mlbench");
 #'
@@ -40,14 +39,21 @@
 #'   method="AIC",
 #'   data=PimaIndiansDiabetes2
 #' );
-#' }
+#' 
+#' # Print result
+#' print(df_result);
 #'
 #' @keywords models nonlinear regression smooth
 #' @importFrom stats as.formula binomial AIC BIC
 #' @export
 dfgam <- function(
-    response, nl.predictors, other.predictors=NULL, smoother="s",
-    method="AIC", data, step=NULL
+    response,
+    nl.predictors,
+    other.predictors=NULL,
+    smoother="s",
+    method="AIC",
+    data,
+    step=NULL
 ) {
   #options(warn=-1);
   if ( missing(data) ) {stop("The argument data is missing");}
@@ -56,8 +62,7 @@ dfgam <- function(
   if ( missing(smoother) ) {smoother <- "s";}
   if (smoother != "s") {stop("argument 'smoother' must be 's'");}
   if ( missing(method) ) {method <- "AIC";}
-  if ( method != "AIC" & method != "AICc" &
-       method != "BIC" & method != "REML" & method != "GCV.Cp")
+  if ( !method %in% c("AIC", "AICc", "BIC", "REML", "GCV.Cp") )
     {stop("The argument 'method' is not valid");}  # include other methods from mgcv?
   if ( missing(step) ) {step <- 3;}
   if (step < 1 | step > 10) {stop("'step' must be between 1 and 10");}
@@ -76,9 +81,8 @@ dfgam <- function(
   if ( is.null(other.predictors) ) {
     covar <- paste("s(", nl.predictors, ")", collapse="+");
     #fmla <- as.formula( paste( names(data)[p1], "~", paste(covar, collapse = "+") ) );
-    fmla <- as.formula( paste( names(data)[p1], "~", covar ) );
-  }
-  if ( !is.null(other.predictors) ) {
+    fmla <- as.formula( paste(names(data)[p1], "~", covar) );
+  } else {
     nop <- length(other.predictors);
     for (i in 1:nop) {
       p2 <- match(names(data), other.predictors[i], nomatch=0);
@@ -86,25 +90,21 @@ dfgam <- function(
     }
     covar1 <- paste("s(", nl.predictors, ")", collapse="+");
     covar2 <- paste(other.predictors, collapse="+");
-    covar <- paste (c(covar1, covar2), collapse="+");
-    fmla <- as.formula( paste( names(data)[p1]," ~ ", covar, collapse = "+") );
+    covar <- paste(c(covar1, covar2), collapse="+");
+    fmla <- as.formula( paste(names(data)[p1], " ~ ", covar, collapse = "+") );
   }
   
-  if (method == "REML")  {
-    fit <- mgcv::gam(fmla, data=data, family=binomial, method = "REML");
-  }
-  if (method == "GCV.Cp") {
-    fit <- mgcv::gam(fmla, data=data, family=binomial, method = "GCV.Cp");
-  }
-  if (method != "REML" & method != "GCV.Cp") {
-    fit <- mgcv::gam(fmla, data=data, family=binomial, method = "REML");
+  if ( method %in% c("REML", "GCV.Cp") ) {
+    fit <- mgcv::gam(formula=fmla, data=data, family=binomial, method=method);
+  } else {
+    fit <- mgcv::gam(formula=fmla, data=data, family=binomial, method="REML");
   }
   df <- summary(fit)$edf;
   ndf <- df;
   msg <- c();
   
   # get df from AIC, AICc and BIC: starting point REML
-  if (method == "AIC" | method == "AICc" | method == "BIC") {
+  if ( method %in% c("AIC", "AICc", "BIC") ) {
     mat <- array( NA, dim=c(41, 4, nnl) ); #df, AIC, BIC, AICc
     #Reduce grid to became faster!
     dfAIC <- df;
@@ -124,13 +124,11 @@ dfgam <- function(
         for (h in 1:lmat) {
           ndf <- df;
           ndf[k] <- mat[h,1,k];
-          aux1 <- paste("gam::s(", nl.predictors, ",df=",ndf, ")", collapse="+");
-          if (is.null(other.predictors)) {aux2 <- aux1;}
-          else {aux2 <- paste(c(aux1,covar2), collapse="+");}
-          fmla3 <- as.formula(
-            paste( names(data)[p1]," ~ ", aux2, collapse = "+")
-          );
-          fit <- gam::gam(fmla3, data=data, family=binomial);
+          aux1 <- paste("gam::s(", nl.predictors, ",df=", ndf, ")", collapse="+");
+          if ( is.null(other.predictors) ) {aux2 <- aux1;}
+          else {aux2 <- paste(c(aux1, covar2), collapse="+");}
+          fmla3 <- as.formula( paste(names(data)[p1], " ~ ", aux2, collapse="+") );
+          fit <- gam::gam(formula=fmla3, data=data, family=binomial);
           mat[h,2,k] <- AIC(fit);
           mat[h,3,k] <- BIC(fit);
           mat[h,4,k] <- AICc(fit);
@@ -139,8 +137,8 @@ dfgam <- function(
         df.BIC[k] <- mat[which.min(mat[,3,k]),1,k];
         df.AICc[k] <- mat[which.min(mat[,4,k]),1,k];
         if (method == "AIC") {df[k] <- df.AIC[k];}
-        if (method == "BIC") {df[k] <- df.BIC[k];}
-        if (method == "AICc") {df[k] <- df.AICc[k];}
+        else if (method == "BIC") {df[k] <- df.BIC[k];}
+        else if (method == "AICc") {df[k] <- df.AICc[k];}
       }
     }
   }
@@ -152,21 +150,23 @@ dfgam <- function(
   res[1:nnl] <- df[1:nnl];
   
   if ( missing(other.predictors) ) {
-    aux1 <- paste("gam::s(", nl.predictors, ",df=",df, ")", collapse="+");
-    fmla3 <- as.formula( paste( names(data)[p1]," ~ ", aux1, collapse = "+") );
-    fit <- gam::gam(fmla3, data=data, family=binomial);
-  }
-  if ( !missing(other.predictors) ) {
+    aux1 <- paste("gam::s(", nl.predictors, ",df=", df, ")", collapse="+");
+    fmla3 <- as.formula( paste(names(data)[p1], " ~ ", aux1, collapse="+") );
+    fit <- gam::gam(formula=fmla3, data=data, family=binomial);
+  } else {
     auxop <- paste(other.predictors, collapse="+");
-    aux1 <- paste("gam::s(", nl.predictors, ",df=",ndf, ")", collapse="+");
-    aux2 <- paste(c(aux1,auxop), collapse="+");
-    fmla3 <- as.formula( paste( names(data)[p1]," ~ ", aux2, collapse = "+") );
-    fit <- gam::gam(fmla3, data=data, family=binomial);
+    aux1 <- paste("gam::s(", nl.predictors, ",df=", ndf, ")", collapse="+");
+    aux2 <- paste(c(aux1, auxop), collapse="+");
+    fmla3 <- as.formula( paste(names(data)[p1], " ~ ", aux2, collapse="+") );
+    fit <- gam::gam(formula=fmla3, data=data, family=binomial);
   }
   
   if ( !is.null(msg) ) {print(msg);}
   ob <- list(
-    fit=fit, df=res, method=method, nl.predictors=nl.predictors,
+    fit=fit,
+    df=res,
+    method=method,
+    nl.predictors=nl.predictors,
     other.predictors=other.predictors
   );
   return(ob);
