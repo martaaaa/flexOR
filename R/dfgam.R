@@ -56,16 +56,16 @@ dfgam <- function(
     step=NULL
 ) {
   #options(warn=-1);
-  if ( missing(data) ) {stop("The argument data is missing");}
-  if ( missing(response) ) {stop("The argument response is missing");}
-  if ( missing(nl.predictors) ) {stop("The argument 'nl.predictors' is missing");}
+  if ( missing(data) ) {stop("Argument 'data' is missing");}
+  if ( missing(response) ) {stop("Argument 'response' is missing");}
+  if ( missing(nl.predictors) ) {stop("Argument 'nl.predictors' is missing");}
   if ( missing(smoother) ) {smoother <- "s";}
-  if (smoother != "s") {stop("argument 'smoother' must be 's'");}
+  if (smoother != "s") {stop("Argument 'smoother' must be 's'");}
   if ( missing(method) ) {method <- "AIC";}
   if ( !method %in% c("AIC", "AICc", "BIC", "REML", "GCV.Cp") )
-    {stop("The argument 'method' is not valid");}  # include other methods from mgcv?
+    {stop("Argument 'method' is not valid");}  # include other methods from mgcv?
   if ( missing(step) ) {step <- 3;}
-  if (step < 1 | step > 10) {stop("'step' must be between 1 and 10");}
+  if (step < 1 | step > 10) {stop("Argument 'step' must lie between 1 and 10");}
   p0 <- match(names(data), response, nomatch=0);
   p1 <- which(p0 == 1);
   ny <- data[,p1];
