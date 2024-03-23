@@ -160,8 +160,7 @@ predict.OR <- function(
       var.eta.ref1[i] <- eta.ref1[i,]%*%vcov(fit)[indices,indices]%*%eta.ref1[i,];
     }
     se.eta.ref1 <- sqrt(var.eta.ref1);
-  }
-  else if (prob > 0 & prob < 1) {
+  } else if (prob > 0 & prob < 1) {
     eta.no.ref <- predict(fit, type="terms");
     if ( inherits(eta.no.ref, "numeric") ) {
       kp <- 1; eta.no.ref <- cbind(eta.no.ref, eta.no.ref);
@@ -202,8 +201,7 @@ predict.OR <- function(
     }
     se.eta.ref1 <- sqrt(var.eta.ref1);
     #print(se.eta.ref1);
-  }
-  else if (prob == 1) {
+  } else if (prob == 1) {
     eta.no.ref <- predict(fit, type="terms");
     if ( inherits(eta.no.ref, "numeric") ) {
       kp <- 1;
