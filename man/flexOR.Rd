@@ -38,13 +38,6 @@ the data frame and response variable or by specifying the formula.
 # Load dataset
 data(PimaIndiansDiabetes2, package="mlbench");
 
-# Fit a GAM model
-fit <- gam(
-  diabetes ~ s(age) + s(mass) + s(pedigree) + pressure + glucose,
-  data=PimaIndiansDiabetes2,
-  family=binomial
-);
-
 # Calculate odds ratios using flexOR
 df_result <- flexOR(
   data=PimaIndiansDiabetes2,

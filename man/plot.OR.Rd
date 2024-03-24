@@ -72,16 +72,10 @@ This function doesn't return a value. It is used for generating a plot.
 Plots smooth odds ratios along with confidence intervals for a specified predictor.
 }
 \examples{
-\dontrun{
+library(gam);
+
 # Load dataset
 data(PimaIndiansDiabetes2, package="mlbench");
-
-# Fit a GAM model
-fit <- gam(
-  diabetes ~ s(age) + s(mass) + s(pedigree) + pressure + glucose,
-  data=PimaIndiansDiabetes2,
-  family=binomial
-);
 
 # Calculate smooth odds ratios using flexOR
 mod1 <- flexOR(
@@ -91,8 +85,7 @@ mod1 <- flexOR(
 );
 
 # Plot the smooth odds ratios
-plot.OR(mod1, predictor="age");
-}
+plot(mod1, predictor="age");
 
 }
 \keyword{hplot}

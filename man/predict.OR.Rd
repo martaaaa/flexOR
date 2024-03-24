@@ -46,16 +46,10 @@ Predicts values using a fitted OR model.
 This function predicts values and prediction intervals using a fitted OR model.
 }
 \examples{
-\dontrun{
+library(gam);
+
 # Load the Pima Indians Diabetes dataset
 data(PimaIndiansDiabetes2, package="mlbench");
-
-# Fit a GAM model
-fit <- gam(
-  diabetes ~ s(age) + s(mass) + s(pedigree) + pressure + glucose,
-  data=PimaIndiansDiabetes2,
-  family=binomial
-);
 
 # Calculate smooth odds ratios using flexOR
 mod1 <- flexOR(
@@ -65,8 +59,7 @@ mod1 <- flexOR(
 );
 
 # Predict the probabilities using predict.OR
-predict.OR(mod1, predictor="age");
-}
+predict(mod1, predictor="age");
 
 }
 \keyword{methods}
