@@ -31,6 +31,8 @@
 #'
 #' @examples
 #' \dontrun{
+#' library(gam);
+#'
 #' # Load dataset
 #' data(PimaIndiansDiabetes2, package="mlbench");
 #' 
