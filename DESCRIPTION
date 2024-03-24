@@ -1,7 +1,7 @@
 Encoding: UTF-8
 Package: flexOR
 Type: Package
-Version: 1.0.0
+Version: 0.9.0
 Date: 2024-02-27
 Title: Flexible odds ratio curves
 Authors@R: c(
