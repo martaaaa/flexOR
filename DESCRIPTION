@@ -1,16 +1,16 @@
 Encoding: UTF-8
 Package: flexOR
 Type: Package
-Version: 0.9.0
+Version: 0.9.2
 Date: 2024-02-27
 Title: Flexible Odds Ratio Curves
 Authors@R: c(
   person(
     given = "Marta",
     family = "Azevedo",
-    role = "aut",
     email = "marta.vasconcelos4@gmail.com",
-    comment = c(ORCID = "0009-0003-4412-6991")
+    comment = c(ORCID = "0009-0003-4412-6991"),
+    role = c("aut", "cre")
   ),
   person(
     given = "Luis",
@@ -32,7 +32,11 @@ Author: Marta Azevedo [aut, cre],
 Maintainer: Marta Azevedo <marta.vasconcelos4@gmail.com>
 Depends: R (>= 3.1.0)
 Imports: gam, graphics, grDevices, mgcv, stats
-Suggests: mlbench
+Suggests: 
+    knitr,
+    mlbench,
+    R.rsp,
+    rmarkdown
 Description: Provides flexible hazard ratio curves allowing non-linear
   relationships between continuous predictors and survival.
   To better understand the effects that each continuous covariate has on the outcome,
@@ -45,3 +49,4 @@ LazyLoad: yes
 LazyData: no
 NeedsCompilation: no
 RoxygenNote: 7.3.1
+VignetteBuilder: knitr

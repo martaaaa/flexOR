@@ -3,7 +3,7 @@
 \docType{package}
 \name{flexOR-package}
 \alias{flexOR-package}
-\title{flexOR: Flexible odds ratio curves}
+\title{flexOR: Flexible Odds Ratio Curves}
 \description{
 Provides flexible hazard ratio curves allowing non-linear relationships between continuous predictors and survival. To better understand the effects that each continuous covariate has on the outcome, results can be expressed in terms of splines-based odds ratio (OR) curves, taking a specific covariate value as reference.
 }
