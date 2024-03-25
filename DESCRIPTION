@@ -38,7 +38,7 @@ Suggests:
     R.rsp,
     rmarkdown,
     plotly
-Description: providing flexible hazard ratio curves that enable modeling non-linear relationships 
+Description: Provides flexible hazard ratio curves that enable modeling non-linear relationships 
 between continuous predictors and survival outcomes. 
 This package facilitates a deeper understanding of the impact of each 
 continuous predictor on the outcome by presenting results in terms of odds ratio (OR) curves based on splines. 
