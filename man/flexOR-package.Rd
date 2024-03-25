@@ -5,7 +5,7 @@
 \alias{flexOR-package}
 \title{flexOR: Flexible Odds Ratio Curves}
 \description{
-Provides flexible hazard ratio curves allowing non-linear relationships between continuous predictors and survival. To better understand the effects that each continuous covariate has on the outcome, results can be expressed in terms of splines-based odds ratio (OR) curves, taking a specific covariate value as reference.
+Provides flexible hazard ratio curves that enable modeling non-linear relationships between continuous predictors and survival outcomes. This package facilitates a deeper understanding of the impact of each continuous predictor on the outcome by presenting results in terms of odds ratio (OR) curves based on splines. These curves allow for comparison against a specified reference value, aiding in the interpretation of the predictor's effect.
 }
 \references{
 Hosmer, D. W. and Lemeshow, S. and Sturdivant, R. X. (2013).
