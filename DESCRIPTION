@@ -3,12 +3,12 @@ Package: flexOR
 Type: Package
 Version: 0.9.0
 Date: 2024-02-27
-Title: Flexible odds ratio curves
+Title: Flexible Odds Ratio Curves
 Authors@R: c(
   person(
     given = "Marta",
     family = "Azevedo",
-    role = c("aut", "cre"),
+    role = "aut",
     email = "marta.vasconcelos4@gmail.com",
     comment = c(ORCID = "0009-0003-4412-6991")
   ),
