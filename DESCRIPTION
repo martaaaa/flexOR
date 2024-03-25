@@ -36,7 +36,8 @@ Suggests:
     knitr,
     mlbench,
     R.rsp,
-    rmarkdown
+    rmarkdown,
+    plotly
 Description: Provides flexible hazard ratio curves allowing non-linear
   relationships between continuous predictors and survival.
   To better understand the effects that each continuous covariate has on the outcome,
