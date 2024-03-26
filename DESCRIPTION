@@ -1,7 +1,7 @@
 Encoding: UTF-8
 Package: flexOR
 Type: Package
-Version: 0.9.3
+Version: 0.9.4
 Date: 2024-03-25
 Title: Flexible Odds Ratio Curves
 Authors@R: c(
@@ -23,7 +23,6 @@ Authors@R: c(
     email = "artur.stat@gmail.com",
     comment = c(ORCID = "0000-0003-1419-4208"),
     role = "aut" ) )
-Author: Marta Azevedo, Luis Meira-Machado, Artur Araujo
 Maintainer: Marta Azevedo <marta.vasconcelos4@gmail.com>
 Depends: R (>= 3.1.0)
 Imports: gam, graphics, grDevices, mgcv, stats
