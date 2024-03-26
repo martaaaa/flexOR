@@ -40,9 +40,8 @@
 #'   data=PimaIndiansDiabetes2
 #' );
 #' 
-#' # Print result
 #' print(df_result);
-#'
+#' 
 #' @keywords models nonlinear regression smooth
 #' @importFrom stats as.formula binomial AIC BIC
 #' @export
@@ -161,7 +160,7 @@ dfgam <- function(
     fit <- gam::gam(formula=fmla3, data=data, family=binomial);
   }
   
-  if ( !is.null(msg) ) {print(msg);}
+  if ( !is.null(msg) ) {message(msg);}
   ob <- list(
     fit=fit,
     df=res,

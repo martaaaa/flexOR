@@ -30,19 +30,15 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
 #' library(gam);
 #'
 #' # Load dataset
 #' data(PimaIndiansDiabetes2, package="mlbench");
 #' 
 #' # Calculate odds ratios using flexOR
-#' df_result <- flexOR(
-#'   data=PimaIndiansDiabetes2,
-#'   response="diabetes",
-#'   formula=~ s(age) + s(mass) + s(pedigree) + pressure + glucose
-#' );
-#' }
+#' df_result <- flexOR(data = PimaIndiansDiabetes2, response = "diabetes", 
+#' formula=~ s(age) + s(mass) + s(pedigree) + pressure + glucose)
+#' print(df_result)
 #' 
 #' @keywords models nonlinear regression smooth
 #' @importFrom stats as.formula binomial na.omit terms

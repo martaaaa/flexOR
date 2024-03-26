@@ -59,7 +59,6 @@ df_result <- dfgam(
   data=PimaIndiansDiabetes2
 );
 
-# Print result
 print(df_result);
 
 }

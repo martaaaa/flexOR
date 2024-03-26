@@ -30,7 +30,7 @@
 #' 
 #' @seealso
 #' \code{\link{gam}}, \code{\link{logLik}}, \code{\link{AIC}}
-#'
+#' 
 #' @keywords models nonlinear regression smooth
 #' @importFrom stats logLik
 #' @export

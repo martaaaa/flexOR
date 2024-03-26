@@ -34,19 +34,15 @@ It accepts two different ways of specifying the model: by providing
 the data frame and response variable or by specifying the formula.
 }
 \examples{
-\dontrun{
 library(gam);
 
 # Load dataset
 data(PimaIndiansDiabetes2, package="mlbench");
 
 # Calculate odds ratios using flexOR
-df_result <- flexOR(
-  data=PimaIndiansDiabetes2,
-  response="diabetes",
-  formula=~ s(age) + s(mass) + s(pedigree) + pressure + glucose
-);
-}
+df_result <- flexOR(data = PimaIndiansDiabetes2, response = "diabetes", 
+formula=~ s(age) + s(mass) + s(pedigree) + pressure + glucose)
+print(df_result)
 
 }
 \keyword{models}

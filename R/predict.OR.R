@@ -104,7 +104,6 @@ predict.OR <- function(
     );
   }
   prediction.values <- sort( unique( c(prediction.values, ref.value) ) );
-  # print(prediction.values);
   if (
     min(prediction.values) < min(mydata[,k]) |
     max(prediction.values) > max(mydata[,k])
@@ -169,7 +168,6 @@ predict.OR <- function(
     }
     ind.prob <- trunc(prob*n);
     xref <- a[,k][ord[ind.prob]];
-    #print(xref);
     eta.xref <- eta.no.ref[,kp][ord[ind.prob]];
     eta.ref <- eta.no.ref[,kp]-eta.xref;
     indices <- grep(names(a)[k], dimnames(fit$x)[[2]]);
@@ -193,7 +191,6 @@ predict.OR <- function(
       var.eta.ref1[i] <- eta.ref1[i,]%*%vcov(fit)[indices,indices]%*%eta.ref1[i,];
     }
     se.eta.ref1 <- sqrt(var.eta.ref1);
-    #print(se.eta.ref1);
   } else if (prob == 1) {
     eta.no.ref <- predict(fit, type="terms");
     if ( inherits(eta.no.ref, "numeric") ) {

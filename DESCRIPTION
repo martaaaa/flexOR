@@ -1,7 +1,7 @@
 Encoding: UTF-8
 Package: flexOR
 Type: Package
-Version: 0.9.4
+Version: 0.9.5
 Date: 2024-03-25
 Title: Flexible Odds Ratio Curves
 Authors@R: c(
@@ -33,6 +33,17 @@ Suggests:
     rmarkdown,
     plotly
 Description: Provides flexible hazard ratio curves that enable modeling non-linear relationships between continuous predictors and survival outcomes. This package facilitates a deeper understanding of the impact of each continuous predictor on the outcome by presenting results in terms of odds ratio (OR) curves based on splines. These curves allow for comparison against a specified reference value, aiding in the interpretation of the predictor's effect.
+  Hosmer, D. W., Lemeshow, S., & Sturdivant, R. X. (2013) <https://www.wiley.com/en-us/Applied+Logistic+Regression%3A+Third+Edition-p-9780470582473>.
+  Royston, P., Altman, D. G., & Sauerbrei, W. (2006) <https://doi.org/10.1002/sim.2331>.
+  Hastie, T. J., Tibshirani, R. J. (1990) <https://www.crcpress.com/Generalized-Additive-Models/Hastie-Tibshirani/9780412343902>.
+  Wood, S. N. (2017) <https://www.crcpress.com/Generalized-Additive-Models-An-Introduction-with-R-Second-Edition/Wood/9781498728331>.
+  Akaike, H. (1974) <https://doi.org/10.1109/TAC.1974.1100705>.
+  Hurvich, C. M., Simonoff, J. S., & Tsai, C. (1998) <https://doi.org/10.1111/1467-9868.00125>.
+  Schwarz, G. (1978) <https://doi.org/10.1214/aos/1176344136>.
+  Cadarso-Suárez, C., Meira-Machado, L., Kneib, T., & Gude, F. (2010) <https://doi.org/10.1177/1471082X0801000303>.
+  Meira-Machado, L., Cadarso-Suárez, C., Gude, F., & Araújo, A. (2013) <https://doi.org/10.1155/2013/745742>.
+  de Boor, C. (2001) <https://www.springer.com/gp/book/9780387953663>.
+  Wood, S. N., Pya, N., & Safken, B. (2016) <https://doi.org/10.1080/01621459.2016.1180986>.
 License: GPL-3
 URL: https://github.com/martaaaa/flexOR
 BugReports: https://github.com/martaaaa/flexOR/issues
