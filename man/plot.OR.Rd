@@ -77,15 +77,12 @@ library(gam);
 # Load dataset
 data(PimaIndiansDiabetes2, package="mlbench");
 
-# Calculate smooth odds ratios using flexOR
 mod1 <- flexOR(
   data=PimaIndiansDiabetes2,
   response="diabetes",
-  formula=~ s(age) + s(mass) + s(pedigree) + pressure + glucose
+  formula=~s(age, 3.3) + s(mass, 4.1) + pedigree)
 );
 
-# Plot the smooth odds ratios
-plot(mod1, predictor="age");
 
 }
 \keyword{hplot}

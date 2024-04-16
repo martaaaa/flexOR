@@ -48,18 +48,20 @@ determining the appropriate degrees of freedom for smoothing terms in GAMs.
 }
 \examples{
 # Load dataset
+library(gam)
 data(PimaIndiansDiabetes2, package="mlbench");
 
 # Calculate degrees of freedom using AIC
-df_result <- dfgam(
+df2 <- dfgam(
   response="diabetes",
-  nl.predictors=c("age", "mass", "pedigree"),
+  nl.predictors=c("age", "mass"),
+  other.predictors=c("pedigree")
   smoother="s",
   method="AIC",
   data=PimaIndiansDiabetes2
 );
 
-print(df_result);
+print(df2$df);
 
 }
 \keyword{models}
