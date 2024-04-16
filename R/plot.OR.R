@@ -36,21 +36,21 @@
 #' mod1 <- flexOR(
 #'   data=PimaIndiansDiabetes2,
 #'   response="diabetes",
-#'   formula=~s(age, 3.3) + s(mass, 4.1) + pedigree)
+#'   formula=~s(age, 3.3) + s(mass, 4.1) + pedigree
 #' );
 #' 
-# plot(
-#  x = or2,
-#  predictor = "mass",
-#  ref.value = 40,
-#  ref.label = "Ref. value",
-#  col.area = c("grey75", "grey90"),
-#  main = "Smooth odds ratio for mass",
-#  xlab = "Body mass index",
-#  ylab = "Log Odds Ratio (Ln OR)",
-#  lty = c(1,2,2,3,3),
-#  round.x = 1,
-#  conf.level = c(0.8, 0.95)
+#  plot(
+# x = mod1,
+# predictor = "mass",
+# ref.value = 40,
+# ref.label = "Ref. value",
+# col.area = c("grey75", "grey90"),
+# main = " ",
+# xlab = "Body mass index",
+# ylab = "Log Odds Ratio (Ln OR)",
+# lty = c(1,2,2,3,3),
+# round.x = 1,
+# conf.level = c(0.8, 0.95)
 # )
 #'
 #' @keywords hplot methods models nonlinear regression smooth

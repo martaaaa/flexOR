@@ -34,7 +34,7 @@
 #' );
 #'
 #' # Predict the probabilities using predict.OR
-#' predict(mod1, predictor="age");
+#' predict(mod1, predictor="age", ref.value=40) 
 #'
 #' @keywords methods models nonlinear regression smooth
 #' @importFrom stats approx as.formula binomial na.omit terms
