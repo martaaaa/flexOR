@@ -55,7 +55,7 @@ data(PimaIndiansDiabetes2, package="mlbench");
 df2 <- dfgam(
   response="diabetes",
   nl.predictors=c("age", "mass"),
-  other.predictors=c("pedigree")
+  other.predictors=c("pedigree"),
   smoother="s",
   method="AIC",
   data=PimaIndiansDiabetes2

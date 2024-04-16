@@ -59,7 +59,7 @@ mod1 <- flexOR(
 );
 
 # Predict the probabilities using predict.OR
-predict(mod1, predictor="age");
+predict(mod1, predictor="age", ref.value=40) 
 
 }
 \keyword{methods}

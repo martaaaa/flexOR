@@ -80,7 +80,7 @@ data(PimaIndiansDiabetes2, package="mlbench");
 mod1 <- flexOR(
   data=PimaIndiansDiabetes2,
   response="diabetes",
-  formula=~s(age, 3.3) + s(mass, 4.1) + pedigree)
+  formula=~s(age, 3.3) + s(mass, 4.1) + pedigree
 );
 
 

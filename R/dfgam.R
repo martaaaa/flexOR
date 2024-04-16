@@ -45,7 +45,8 @@
 #' print(df2$df);
 #' 
 #' @keywords models nonlinear regression smooth
-#' @importFrom stats as.formula binomial AIC BIC
+#' @importFrom stats as.formula binomial AIC BIC 
+#' @import gam
 #' @export
 dfgam <- function(response, nl.predictors, other.predictors=NULL, smoother="s", method = "AIC", data, step=NULL) {
   #options(warn=-1);
