@@ -1,0 +1,90 @@
+PKG <- "flexOR";
+
+citHeader(
+  paste("To cite the R package", PKG, "in publications use:")
+);
+
+title <- "Flexible Odds Ratio Curves";
+year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", meta$Date, perl=TRUE);
+vers <- paste("R package version", meta$Version);
+url <- paste("https://CRAN.R-project.org/package=", PKG, sep="");
+
+bibentry(
+	bibtype     = "Manual",
+	title       = paste(PKG, ": ", title, sep=""),
+	author      = c(
+                  person(
+                    given = "Marta",
+                    family = "Azevedo",
+                    role = c("aut", "cre"),
+                    email = "marta.vasconcelos4@gmail.com",
+                    comment = c(ORCID = "0009-0003-4412-6991")
+                  ),
+                  person(
+                    given = "Luís",
+                    family = "Meira-Machado",
+                    role = "aut",
+                    email = "lmachado@math.uminho.pt",
+                    comment = c(ORCID = "0000-0002-8577-7665")
+                  ),
+                  person(
+                    given = "Artur",
+                    family = "Araújo",
+                    role = "aut",
+                    email = "artur.stat@gmail.com",
+                    comment = c(ORCID = "0000-0003-1419-4208")
+                  )
+                ),
+	year        = year,
+	note        = vers,
+	url         = url,
+	textVersion = paste(
+    "Marta Azevedo, Luís Meira-Machado and Artur Araújo (", year, "). ",
+    PKG, ": ", title, ". ", vers, " URL ", url, sep=""
+  )
+);
+
+bibentry(
+  bibtype     = "Article",
+  title       = "Pointwise Nonparametric Estimation of Odds Ratio Curves with R: Introducing the flexOR Package",
+  author      = c(
+                  person(
+                    given = "Marta",
+                    family = "Azevedo",
+                    role = "aut",
+                    email = "marta.vasconcelos4@gmail.com",
+                    comment = c(ORCID = "0009-0003-4412-6991")
+                  ),
+                  person(
+                    given = "Luís",
+                    family = "Meira-Machado",
+                    role = "aut",
+                    email = "lmachado@math.uminho.pt",
+                    comment = c(ORCID = "0000-0002-8577-7665")
+                  ),
+                  person(
+                    given = "Francisco",
+                    family = "Gude",
+                    role = "aut",
+                    email = "francisco.gude.sampedro@sergas.es",
+                    comment = c(ORCID = "0000-0002-9681-1662")
+                  ),
+                  person(
+                    given = "Artur",
+                    family = "Araújo",
+                    role = "aut",
+                    email = "artur.stat@gmail.com",
+                    comment = c(ORCID = "0000-0003-1419-4208")
+                  )
+              ),
+  journal     = "Applied Sciences",
+  issn        = "2076-3417",
+  year        = "2024",
+  volume      = "14",
+  number      = "9",
+  pages       = "1--17",
+  doi         = "10.3390/app14093897",
+  textVersion  = "Marta Azevedo, Luís Meira-Machado, Francisco Gude and Artur Araújo (2024).
+  “Pointwise Nonparametric Estimation of Odds Ratio Curves with R: Introducing the flexOR Package”.
+  Applied Sciences, 14(9), 1-17. doi:10.3390/app14093897"
+);
