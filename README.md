@@ -16,7 +16,8 @@ If you want to use the development version of the **flexOR** package, you can in
 remotes::install_github(
   repo="martaaaa/flexOR",
   build=TRUE,
-  build_manual=TRUE
+  build_manual=TRUE,
+  build_vignettes=TRUE
 );
 ```
 
