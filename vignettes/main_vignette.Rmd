@@ -23,8 +23,8 @@ Email: marta.vasconcelos4@gmail.com
 Email: lmachado@math.uminho.pt  
 
 **Artur Araújo**  
-*Department of Statistics and Operations Research, University of Vigo, Vigo, Spain*
-Email: artur.stat@gmail.com
+*Department of Statistics and Operations Research, University of Vigo, Vigo, Spain*  
+Email: artur.stat@gmail.com 
 
 ## Abstract
 Understanding the relationship between continuous predictors and binary outcomes is a common challenge in statistical analysis. Traditional parametric regression methods often impose rigid functional forms, limiting their adaptability to complex datasets. To address this constraint and enhance flexibility, various smoothing techniques, particularly those based on splines, have been widely explored. Expressing results in terms of splines-based odds ratio (OR) curves provides a subtle understanding of the impact each continuous covariate has on the outcome.
