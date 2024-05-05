@@ -5,6 +5,7 @@
 \section{Changes in version 1.0.1}{
   \itemize{
     \item{Added CITATION and NEWS.Rd files.}
+    \item{Improved the documentation.}
   }
 }
 
