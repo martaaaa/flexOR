@@ -1,5 +1,5 @@
 #' @title predict.OR : Predict Method for OR Objects
-#' 
+#'
 #' @description
 #' Predicts values using a fitted OR model.
 #'
@@ -20,6 +20,12 @@
 #' @return
 #' A matrix with predicted values and prediction intervals.
 #'
+#' @references
+#'  Azevedo, M., Meira-Machado, L., Gude, F., and Araújo, A. (2024).
+#'  Pointwise Nonparametric Estimation of Odds Ratio Curves with R:
+#'  Introducing the flexOR Package. \emph{Applied Sciences}, \bold{14}(9), 1-17.
+#'  \doi{10.3390/app14093897}
+#'
 #' @examples
 #' library(gam);
 #'
@@ -34,7 +40,7 @@
 #' );
 #'
 #' # Predict the probabilities using predict.OR
-#' predict(mod1, predictor="age", ref.value=40) 
+#' predict(mod1, predictor="age", ref.value=40)
 #'
 #' @keywords methods models nonlinear regression smooth
 #' @importFrom stats approx as.formula binomial na.omit terms
@@ -49,21 +55,21 @@ predict.OR <- function(
   if ( !missing(ref.value) ) {prob <- 0.5;}
   if ( missing(prob) & missing(ref.value) ) {prob <- 0;}
   if ( !inherits(object, "OR") ) {stop("Object must be of class OR");}
-  
+
   formula <- object$formula;
   mydata <- object$dataset;
   response <- object$response;
-  
+
   p0 <- match(names(mydata), response, nomatch = 0);
   p1 <- which(p0 == 1);
   ny <- mydata[, p1];
-  
+
   if ( !missing(response) ) {response <- ny;}
-  
+
   fmla <- attr(terms(formula), "term.labels");
   ncov <- length(fmla);
   colvar <- rep(0, ncov);
-  
+
   for (k in 1:ncov) {
     if ( fmla[k] %in% names(mydata) ) {
       colvar[k] <- which(names(mydata) == fmla[k]);
@@ -73,12 +79,12 @@ predict.OR <- function(
       }
     }
   }
-  
+
   if ( any(colvar == 0) ) {stop("'formula' must contain the right variables");}
-  
+
   covar <- as.formula( paste( " ny ~ ", paste(fmla, collapse = "+") ) );
   fit <- gam::gam(covar, data=mydata, x=TRUE, family=binomial);
-  
+
   model0 <- object;
   model <- fit;
   #mydata <- model$data; #remove obs with NA
@@ -86,7 +92,7 @@ predict.OR <- function(
   p.vars <- c(p.vars, p1);
   mydata <- mydata[,p.vars];
   mydata <- na.omit(mydata);
-  
+
   fit <- model;
   if ( is.list(fit$x) ) {fit <- update(fit, . ~ ., x=TRUE);}
   ctype <- "FALSE";
@@ -113,7 +119,7 @@ predict.OR <- function(
   a <- mydata; # a is our dataset
   n.predictor <- names(a)[k];
   n <- dim(a)[1];
-  
+
   if ( !missing(ref.value) ) {
     pp <- seq(0, 1, len=1000);
     app <- quantile(a[,k], pp);
@@ -121,7 +127,7 @@ predict.OR <- function(
     qq1 <- max(qq);
     prob <- qq1/1000;
   }
-  
+
   if (prob == 0) {
     eta.no.ref <- predict(fit, type="terms");
     if ( inherits(eta.no.ref, "numeric") ) {

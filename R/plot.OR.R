@@ -27,6 +27,12 @@
 #' @return
 #' This function doesn't return a value. It is used for generating a plot.
 #'
+#' @references
+#'  Azevedo, M., Meira-Machado, L., Gude, F., and Araújo, A. (2024).
+#'  Pointwise Nonparametric Estimation of Odds Ratio Curves with R:
+#'  Introducing the flexOR Package. \emph{Applied Sciences}, \bold{14}(9), 1-17.
+#'  \doi{10.3390/app14093897}
+#'
 #' @examples
 #' library(gam);
 #'
@@ -38,7 +44,7 @@
 #'   response="diabetes",
 #'   formula=~s(age, 3.3) + s(mass, 4.1) + pedigree
 #' );
-#' 
+#'
 #  plot(
 # x = mod1,
 # predictor = "mass",
@@ -214,7 +220,7 @@ plot.OR <- function(
     if (ylog) {main <- paste("Smooth log odds ratio for", names(a)[k]);}
     else {main <- paste("Smooth odds ratio for", names(a)[k]);}
   }
-  
+
   tmat <- cbind(
     eta.ref, eta.ref-qnorm(qvalue)*se.eta.ref1, eta.ref+qnorm(qvalue)*se.eta.ref1
   );
@@ -224,7 +230,7 @@ plot.OR <- function(
     );
   }
   if (!ylog) {tmat <- exp(tmat);}
-  
+
   line <- rep(0, n);
   jj <- match(sort(unique(a[,k])), a[,k]);
   if ( missing(xlim) ) {xlim <- c( min(a[,k]), max(a[,k]) );}
@@ -240,17 +246,17 @@ plot.OR <- function(
   if ( xref < min(xlim) | xref > max(xlim) ) {
     stop("The reference value is out of range of 'xlim'");
   }
-  
+
   #  matplot(
   #    x=a[jj,k], y=tmat[jj,], type="l", lty=c(1, 5, 5, 2), col=c(1, 2, 2, 1),
   #    xlab=xlab, ylab=ylab, xlim=xlim, ylim=ylim, log=log, xaxt="n", main=main, ...
   #  );
-  
+
   if (length(conf.level) > 1) {
     tmat2 <- tmat;
     tmat2[,2:3] <- tmat[,4:5];
     tmat2[,4:5] <- tmat[,2:3];
-    
+
     #plot
     matplot(
       x = a[jj,k],
@@ -265,23 +271,23 @@ plot.OR <- function(
       xlab = xlab,
       ylab = ylab
     );
-    
+
     #shaded areas
     polygon(
       c(a[jj,k], rev(a[jj,k])),
       c(tmat[jj, 4], rev(tmat[jj, 5])),
-      col = col.area[1],  
+      col = col.area[1],
       border = NA
     );
-    
+
     polygon(
       c(a[jj,k], rev(a[jj,k])),
       c(tmat[jj, 2], rev(tmat[jj, 3])),
-      col = col.area[2],  
+      col = col.area[2],
       border = NA
     );
-    
-    # Add lines to the plot 
+
+    # Add lines to the plot
     matlines(
       x = a[jj,k],
       y = tmat[jj, ],
@@ -289,7 +295,7 @@ plot.OR <- function(
       col = 1,
       type = "l"
     );
-    
+
     # Definition of the x axes
     xxx <- round( seq(min(a[,k]), max(a[,k]),len=5) );
     if ( missing(xx) ) {
@@ -297,7 +303,7 @@ plot.OR <- function(
     }
     axis(1, xx, ...);
   }
-  
+
   if (length(conf.level) == 1) {
     matplot(
       x = a[jj,k],
@@ -312,22 +318,22 @@ plot.OR <- function(
       xlab = xlab,
       ylab = ylab
     );
-    
+
     polygon(
       c(a[jj,k], rev(a[jj,k])),
       c(tmat[jj, 2], rev(tmat[jj, 3])),
-      col = col.area[1],  
+      col = col.area[1],
       border = NA
     );
-    
+
     # Add lines
     matlines(
       x = a[jj,k],
       y = tmat[jj, ],
-      lty = lty,  
-      col = col   
+      lty = lty,
+      col = col
     );
-    
+
     # Definition of the x axes
     xxx <- round( seq(min(a[,k]), max(a[,k]),len=5) );
     if ( missing(xx) ) {
@@ -335,9 +341,9 @@ plot.OR <- function(
     }
     axis(1, xx, ...);
   }
-  
+
   y <- c(0, 0);
-  
+
   if ( missing(xlim) ) {
     v1 <- min(a[,k])+( max(a[,k])-min(a[,k]) )/10;
     v2 <- min(a[,k])+9*( max(a[,k])-min(a[,k]) )/10;

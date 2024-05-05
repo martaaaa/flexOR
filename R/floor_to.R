@@ -7,13 +7,19 @@
 #' @param x numeric value or vector that you want to round down or floor.
 #' @param to the base to which you want to round down the input value(s).
 #' The default value is set to 1, meaning the function will round down to the nearest integer.
-#' 
+#'
 #' @return The number rounded down to the specified multiple.
-#' 
+#'
+#' @references
+#'  Azevedo, M., Meira-Machado, L., Gude, F., and Araújo, A. (2024).
+#'  Pointwise Nonparametric Estimation of Odds Ratio Curves with R:
+#'  Introducing the flexOR Package. \emph{Applied Sciences}, \bold{14}(9), 1-17.
+#'  \doi{10.3390/app14093897}
+#'
 #' @examples
 #' floor_to(7, 3); # Returns 6, as 6 is the largest multiple of 3 less than or equal to 7.
 #' floor_to(5, 2); # Returns 4, as 4 is the largest multiple of 2 less than or equal to 5.
-#' 
+#'
 #' @keywords arith
 #' @export
 floor_to <- function(x, to=1) {

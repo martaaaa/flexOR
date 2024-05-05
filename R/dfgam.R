@@ -27,6 +27,12 @@
 #'   \item \code{other.predictors}: Other predictors used in the model if specified.
 #' }
 #'
+#' @references
+#'  Azevedo, M., Meira-Machado, L., Gude, F., and Araújo, A. (2024).
+#'  Pointwise Nonparametric Estimation of Odds Ratio Curves with R:
+#'  Introducing the flexOR Package. \emph{Applied Sciences}, \bold{14}(9), 1-17.
+#'  \doi{10.3390/app14093897}
+#'
 #' @examples
 #' # Load dataset
 #' library(gam)
@@ -41,11 +47,11 @@
 #'   method="AIC",
 #'   data=PimaIndiansDiabetes2
 #' );
-#' 
+#'
 #' print(df2$df);
-#' 
+#'
 #' @keywords models nonlinear regression smooth
-#' @importFrom stats as.formula binomial AIC BIC 
+#' @importFrom stats as.formula binomial AIC BIC
 #' @import gam
 #' @export
 dfgam <- function(response, nl.predictors, other.predictors=NULL, smoother="s", method = "AIC", data, step=NULL) {
@@ -67,13 +73,13 @@ dfgam <- function(response, nl.predictors, other.predictors=NULL, smoother="s", 
   df <- rep(1, length(nl.predictors));
   fmla <- c();
   nl.fmla <- c();
-  
-  # df for nonlinear predictors 
+
+  # df for nonlinear predictors
   if(is.null(other.predictors)){
     covar <- paste("s(", nl.predictors, ")", collapse="+")
     #fmla <- as.formula( paste( names(data)[p1], "~", paste(covar, collapse = "+") ) );
     fmla <- as.formula( paste( names(data)[p1], "~", covar ) );
-    
+
   }
   if(!is.null(other.predictors)){
     nop <- length(other.predictors);
@@ -86,14 +92,14 @@ dfgam <- function(response, nl.predictors, other.predictors=NULL, smoother="s", 
     covar <- paste (c(covar1, covar2), collapse="+");
     fmla <- as.formula( paste( names(data)[p1]," ~ ", covar, collapse = "+") ) ;
   }
-  
+
   if (method == "REML")  {fit <- mgcv::gam(fmla, data=data, family=binomial, method = "REML");}
   if (method == "GCV.Cp")  {fit <- mgcv::gam(fmla, data=data, family=binomial, method = "GCV.Cp");}
   if (method != "REML" & method != "GCV.Cp") {fit <- mgcv::gam(fmla, data=data, family=binomial, method = "REML");}
   df <- summary(fit)$edf
   ndf <- df
   msg <- c()
-  
+
   # get df from AIC, AICc and BIC: starting point REML
   if (method == "AIC" | method == "AICc" | method == "BIC"){
     mat <- array(NA, dim=c(41,4,nnl)) #df, AIC, BIC, AICc     #Reduce grid to became faster!
@@ -104,7 +110,7 @@ dfgam <- function(response, nl.predictors, other.predictors=NULL, smoother="s", 
     df.AIC <- df
     df.BIC <- df
     df.AICc <- df
-    
+
     #loop for the number of steps to get a fine tunning
     for (m in 1:step){
       for(k in 1:nnl){
@@ -114,7 +120,7 @@ dfgam <- function(response, nl.predictors, other.predictors=NULL, smoother="s", 
         for(h in 1:lmat){
           ndf <- df
           ndf[k] <- mat[h,1,k]
-          
+
           aux1 <- paste("s(", nl.predictors, ",df=",ndf, ")", collapse="+")
           if (is.null(other.predictors)) {aux2 <- aux1}
           else {aux2 <- paste(c(aux1,covar2), collapse="+")}
@@ -131,13 +137,13 @@ dfgam <- function(response, nl.predictors, other.predictors=NULL, smoother="s", 
       }
     }
   }
-  
-  #return	
+
+  #return
   res <- matrix(NA,ncol=1, nrow=nnl)
   colnames(res) <- "df"
   rownames(res) <- nl.predictors
   res[1:nnl] <- df[1:nnl]
-  
+
   if(missing(other.predictors)){
     aux1 <- paste("s(", nl.predictors, ",df=",df, ")", collapse="+")
     fmla3 <- as.formula( paste( names(data)[p1]," ~ ", aux1, collapse = "+") ) ;
@@ -150,9 +156,8 @@ dfgam <- function(response, nl.predictors, other.predictors=NULL, smoother="s", 
     fmla3 <- as.formula( paste( names(data)[p1]," ~ ", aux2, collapse = "+") ) ;
     fit <- gam(fmla3, data=data, family=binomial)
   }
-  
+
   if(!is.null(msg)) print(msg)
   ob <- list(fit=fit, df=res, method=method, nl.predictors=nl.predictors, other.predictors=other.predictors)
   return(ob)
 } # dfgam
-
