@@ -64,6 +64,12 @@ df2 <- dfgam(
 print(df2$df);
 
 }
+\references{
+Azevedo, M., Meira-Machado, L., Gude, F., and Araújo, A. (2024).
+ Pointwise Nonparametric Estimation of Odds Ratio Curves with R:
+ Introducing the flexOR Package. \emph{Applied Sciences}, \bold{14}(9), 1-17.
+ \doi{10.3390/app14093897}
+}
 \keyword{models}
 \keyword{nonlinear}
 \keyword{regression}

@@ -26,4 +26,10 @@ floor_to(7, 3); # Returns 6, as 6 is the largest multiple of 3 less than or equa
 floor_to(5, 2); # Returns 4, as 4 is the largest multiple of 2 less than or equal to 5.
 
 }
+\references{
+Azevedo, M., Meira-Machado, L., Gude, F., and Araújo, A. (2024).
+ Pointwise Nonparametric Estimation of Odds Ratio Curves with R:
+ Introducing the flexOR Package. \emph{Applied Sciences}, \bold{14}(9), 1-17.
+ \doi{10.3390/app14093897}
+}
 \keyword{arith}
